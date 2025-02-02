@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Vite + React</title>
+   </head>
+
+   <body>
+      <div id="root"></div>
+      <script type="module" src="/src/main.jsx"></script>
+      <!-- <button onclick="document.getElementById('folderInput').click()">Seleccionar Carpeta</button>
+      <input type="file" id="folderInput" webkitdirectory style="display: none" />
+      <button id="selectFolderBtn">Seleccionar Carpeta2222</button>
+      <ul id="fileList"></ul> -->
+   </body>
+   <script>
+      //Logica para navegador google
+      // document.getElementById('folderInput').addEventListener('change', function (event) {
+      //    const fileList = event.target.files;
+      //    const listElement = document.getElementById('fileList');
+      //    listElement.innerHTML = ''; // Limpiar la lista antes de agregar nuevos elementos
+
+      //    for (let i = 0; i < fileList.length; i++) {
+      //       const li = document.createElement('li');
+      //       li.textContent = fileList[i].webkitRelativePath; // Muestra la ruta relativa dentro de la carpeta
+      //       listElement.appendChild(li);
+      //    }
+      // });
+
+      // async function selectFolder() {
+      //    // Abre el selector de directorios
+      //    const dirHandle = await window.showDirectoryPicker();
+      //    const listElement = document.getElementById('fileList');
+      //    listElement.innerHTML = ''; // Limpiar la lista antes de agregar nuevos elementos
+
+      //    // Recorre los archivos y carpetas dentro del directorio
+      //    for await (const entry of dirHandle.values()) {
+      //       const li = document.createElement('li');
+      //       li.textContent = entry.name;
+
+      //       // Si es un archivo
+      //       if (entry.kind === 'file') {
+      //          const file = await entry.getFile();
+      //          li.textContent = file.name;
+      //       }
+
+      //       // Si es una carpeta
+      //       if (entry.kind === 'directory') {
+      //          let hasFiles = false;
+      //          // Verifica si la carpeta contiene archivos
+      //          for await (const _ of entry.values()) {
+      //             hasFiles = true;
+      //             break;
+      //          }
+      //          if (!hasFiles) {
+      //             li.textContent += ' (Carpeta vacía)';
+      //          }
+      //       }
+      //       listElement.appendChild(li);
+      //    }
+      // }
+
+      // document.getElementById('selectFolderBtn').addEventListener('click', selectFolder);
+   </script>
+</html>
