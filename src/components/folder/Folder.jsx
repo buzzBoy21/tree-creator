@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState, memo, useTransition } from 'react';
 import AddFolder from '../addFolder/AddFolder';
 import ArrowButton from '../buttons/ArrowButton';
 import style from './folder.module.css';
@@ -9,8 +9,19 @@ import ChildrenFolders from '../childrenFolders/ChildrenFolders';
 import { removeFolder } from '../../utils/removeFolder';
 import { FoldersContext } from '../../context/FolderStructureContext';
 import { moveFolderDown, moveFolderUp } from '../../utils/moveFolder';
-export default function Folder({ idFolder, nameFolder, childrenFolders, brotherUp, brotherDown }) {
+import CommentInput from '../commentInput/CommentInput';
+import { updateComment } from '../../utils/updateComment';
+import { Spinner } from '@chakra-ui/react';
+
+const Folder = memo(function Folder({
+   idFolder,
+   nameFolder,
+   childrenFolders,
+   brotherUp,
+   brotherDown,
+}) {
    const [name, setName] = useState(nameFolder);
+   const [isPending, startTransition] = useTransition();
    const [expand, setExpand] = useState({
       showMore: false,
       cssContainer: 'center',
@@ -39,10 +50,20 @@ export default function Folder({ idFolder, nameFolder, childrenFolders, brotherU
    }
    function handleDownButton() {
       const newFolders = context.folders;
-      moveFolderDown(idFolder, newFolders);
-      console.log(JSON.stringify(newFolders, null, '\t'));
-      setContext({ folders: newFolders, highestId: context.highestId });
+      startTransition(() => {
+         moveFolderDown(idFolder, newFolders);
+         setContext({ folders: newFolders, highestId: context.highestId });
+      });
    }
+
+   function handleChangeDescription(valueDescription) {
+      const newDescription = valueDescription;
+      startTransition(() => {
+         updateComment(idFolder, context.folders, newDescription);
+         setContext({ folders: context.folders, highestId: context.highestId });
+      });
+   }
+
    return (
       <div className={style.containerFolder} style={{ alignItems: expand.cssContainer }}>
          <div className={style.principalSection}>
@@ -56,6 +77,7 @@ export default function Folder({ idFolder, nameFolder, childrenFolders, brotherU
                <p>{name} </p>
             </div>
             <ul>
+               <li>{idFolder}</li>
                {brotherDown && (
                   <li>
                      {' '}
@@ -79,7 +101,6 @@ export default function Folder({ idFolder, nameFolder, childrenFolders, brotherU
                      colorScheme="gray"
                      variant="solid"
                      onClick={() => handleEliminate(idFolder)}>
-                     {' '}
                      <img src={binSvg} alt="bin logo" style={{ height: '1.5em' }} />
                   </Button>
                </li>
@@ -88,11 +109,15 @@ export default function Folder({ idFolder, nameFolder, childrenFolders, brotherU
          <div className={style.bottomSection}>
             {expand.showMore && (
                <>
-                  <ChildrenFolders folders={childrenFolders}></ChildrenFolders>{' '}
+                  <CommentInput
+                     idFolder={idFolder}
+                     onChange={handleChangeDescription}></CommentInput>
+                  <ChildrenFolders folders={childrenFolders}></ChildrenFolders>
                   <AddFolder folderId={idFolder} />
                </>
             )}
          </div>
       </div>
    );
-}
+});
+export default Folder;

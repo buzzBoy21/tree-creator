@@ -1,4 +1,5 @@
 .container {
+   position: relative;
    flex-grow: 1;
    background-color: #9f9f9f;
    font-family: monospace;
@@ -8,4 +9,7 @@
    line-height: 1em;
    min-width: 25dvw;
    height: 100%;
+   border-radius: 20px 0px 0px 0px;
+   overflow: auto;
+   padding: 1em;
 }

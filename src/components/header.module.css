@@ -1,8 +1,24 @@
 .header {
-   position: fixed;
+   position: relative;
    display: flex;
    justify-content: flex-start;
    top: 0px;
    width: fit-content;
    height: 50px;
+   width: 100%;
+   justify-content: space-between;
+   box-sizing: border-box;
+   align-items: center;
+   padding: 0em 1em;
+   margin-top: 1em;
+   & > .mainPart {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 2em;
+   }
+   /* & > img {
+      position: absolute;
+      left: 1em;
+   } */
 }

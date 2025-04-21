@@ -1,0 +1,242 @@
+import {
+   Modal,
+   ModalOverlay,
+   ModalContent,
+   ModalHeader,
+   ModalCloseButton,
+   ModalBody,
+   Button,
+   ModalFooter,
+   FormControl,
+   FormLabel,
+   Switch,
+   NumberInputStepper,
+   NumberIncrementStepper,
+   NumberDecrementStepper,
+   NumberInputField,
+   NumberInput,
+   Input,
+} from '@chakra-ui/react';
+
+import React, { useContext, useEffect, useId, useRef, useState } from 'react';
+import { ConfigurationContext } from '../../context/ConfigurationContext';
+import { defaultConfiguration } from '../../assets/constanst';
+import ColorPicker from '../colorPicker/ColorPicker';
+function generateSpaces(count) {
+   return ' '.repeat(count);
+}
+function generateSpacesWithLine(count) {
+   return '│' + ' '.repeat(count - 1);
+}
+
+function ConfigModal({ isOpen }) {
+   const [getConfiguration, setConfiguration] = useContext(ConfigurationContext);
+   // const showFolderSwitch = useRef(null);
+   // const showCommentSwitch = useRef(null);
+   // const heightBetweenLines = useRef(null);
+   // const maxCommentWidth = useRef(null);
+   // const indentation = useRef(null);
+   // const tabulationPerFolder = useRef(null);
+   const [showFolderSlash, setShowFolderSlash] = useState(getConfiguration.showFolderSlash === '/');
+   const [showCommentSwitch, setShowCommentSwitch] = useState(getConfiguration.showComment);
+   const [heightBetweenLines, setHeightBetweenLines] = useState(
+      getConfiguration.heightBetweenLines
+   );
+   const [maxCommentWidth, setMaxCommentWidth] = useState(getConfiguration.maxCommentWidth);
+   const [indentation, setIndentation] = useState(getConfiguration.indentation.length);
+   const [tabulationPerFolder, setTabulationPerFolder] = useState(
+      getConfiguration.tabulationPerFolder.withOutLine.length
+   );
+   const [indicateCommentWith, setIndicateCommentWith] = useState(
+      getConfiguration.indicateCommentWith
+   );
+
+   const [backgroundColor, setBackgroundColor] = useState(getConfiguration.colorBackground);
+   const [commentColor, setCommentColor] = useState(getConfiguration.colorComment);
+   const [branchColor, setBranchColor] = useState(getConfiguration.colorBranch);
+
+   const onClose = () => {
+      const tabulationPerFolderToStore = {
+         withOutLine: generateSpaces(tabulationPerFolder),
+         withLine: generateSpacesWithLine(tabulationPerFolder),
+      };
+      const identationToStore = generateSpaces(indentation);
+      setConfiguration({
+         colorBackground: backgroundColor,
+         colorComment: commentColor,
+         colorBranch: branchColor,
+         showFolderSlash: showFolderSlash ? '/' : '',
+         showComment: showCommentSwitch,
+         indentation: identationToStore,
+         tabulationPerFolder: tabulationPerFolderToStore,
+         heightBetweenLines: heightBetweenLines,
+         maxCommentWidth: maxCommentWidth,
+         indicateCommentWith: indicateCommentWith,
+      });
+      console.log('showFolderSlash', tabulationPerFolderToStore);
+      isOpen.setOpenModal(false);
+   };
+
+   const handleResetConfiguration = () => {
+      setShowFolderSlash(defaultConfiguration.showFolderSlash === '/');
+      setShowCommentSwitch(defaultConfiguration.showComment);
+      setHeightBetweenLines(defaultConfiguration.heightBetweenLines);
+      setMaxCommentWidth(defaultConfiguration.maxCommentWidth);
+      setIndentation(defaultConfiguration.indentation.length);
+      setTabulationPerFolder(defaultConfiguration.tabulationPerFolder.withOutLine.length);
+      setIndicateCommentWith(defaultConfiguration.indicateCommentWith);
+      setBackgroundColor(defaultConfiguration.colorBackground);
+      setCommentColor(defaultConfiguration.colorComment);
+      setBranchColor(defaultConfiguration.colorBranch);
+   };
+   return (
+      <Modal isOpen={isOpen.openModal} scrollBehavior="inside">
+         <ModalOverlay />
+         <ModalContent>
+            <ModalHeader>⚙️Config </ModalHeader>
+            <ModalCloseButton
+               onClick={() => {
+                  onClose();
+               }}
+            />
+            <ModalBody>
+               <FormControl display="flex" alignItems="center">
+                  <FormLabel htmlFor="showFolderSlash" mb="0">
+                     Show folder slash
+                  </FormLabel>
+                  <Switch
+                     id="showFolderSlash"
+                     // defaultChecked={showFolderSlash}
+                     defaultChecked={showCommentSwitch}
+                     onChange={(e) => setShowFolderSlash(e.target.checked)}
+                     isChecked={showFolderSlash}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel htmlFor="showComment" mb="0">
+                     Show comments
+                  </FormLabel>
+                  <Switch
+                     id="showComment"
+                     defaultChecked={showCommentSwitch}
+                     onChange={(e) => setShowCommentSwitch(e.target.checked)}
+                     isChecked={showCommentSwitch}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Height between lines</FormLabel>
+                  <NumberInput
+                     defaultValue={heightBetweenLines}
+                     min={1}
+                     max={5}
+                     onChange={(value) => setHeightBetweenLines(value)}
+                     value={heightBetweenLines}>
+                     <NumberInputField />
+                     <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                     </NumberInputStepper>
+                  </NumberInput>
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Max comment width</FormLabel>
+                  <NumberInput
+                     defaultValue={maxCommentWidth}
+                     min={10}
+                     max={200}
+                     onChange={(value) => setMaxCommentWidth(value)}
+                     value={maxCommentWidth}>
+                     <NumberInputField />
+                     <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                     </NumberInputStepper>
+                  </NumberInput>
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Indentation</FormLabel>
+                  <NumberInput
+                     defaultValue={indentation}
+                     min={0}
+                     max={50}
+                     onChange={(value) => setIndentation(value)}
+                     value={indentation}>
+                     <NumberInputField />
+                     <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                     </NumberInputStepper>
+                  </NumberInput>
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Tabulation per folder</FormLabel>
+                  <NumberInput
+                     defaultValue={tabulationPerFolder}
+                     min={1}
+                     max={7}
+                     value={tabulationPerFolder}
+                     onChange={(value) => setTabulationPerFolder(value)}>
+                     <NumberInputField />
+                     <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                     </NumberInputStepper>
+                  </NumberInput>
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Indicate comment with</FormLabel>
+
+                  <Input
+                     defaultValue={indicateCommentWith}
+                     value={indicateCommentWith}
+                     onChange={(value) => {
+                        setIndicateCommentWith(value.target.value);
+                     }}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Comment color</FormLabel>
+
+                  <ColorPicker
+                     defaultValue={commentColor}
+                     onChange={(value) => {
+                        setCommentColor(value);
+                     }}
+                     value={commentColor}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Background color</FormLabel>
+
+                  <ColorPicker
+                     defaultValue={backgroundColor}
+                     onChange={(value) => {
+                        setBackgroundColor(value);
+                     }}
+                     value={backgroundColor}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Branch color</FormLabel>
+
+                  <ColorPicker
+                     defaultValue={branchColor}
+                     onChange={(value) => {
+                        setBranchColor(value);
+                     }}
+                     value={branchColor}
+                  />
+               </FormControl>
+            </ModalBody>
+
+            <ModalFooter mt={10}>
+               <Button variant="ghost" onClick={handleResetConfiguration}>
+                  Reset configuration
+               </Button>
+            </ModalFooter>
+         </ModalContent>
+      </Modal>
+   );
+}
+
+export default ConfigModal;

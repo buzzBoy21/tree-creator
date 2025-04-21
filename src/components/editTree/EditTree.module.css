@@ -3,6 +3,28 @@
    border-top: 1px solid #aaa;
    border-right: 1px solid #aaa;
    flex-grow: 1;
-   overflow: auto;
    min-width: 25dvw;
+   overflow: auto;
+   max-height: 100%;
+   clip-path: inset(0px round 0px 20px 0px 0px);
+}
+
+::-webkit-scrollbar {
+   width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+   background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+   background: #888;
+   border-radius: 1em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+   background: #555;
 }

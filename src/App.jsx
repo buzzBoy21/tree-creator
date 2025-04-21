@@ -1,28 +1,30 @@
 import { Header } from './components/Header';
 import { ChakraProvider } from '@chakra-ui/react';
-import { useBrowserDetection } from './hook/useBrowserDetection';
-import { ImportFolders } from './components/importFolder/ImportFolders';
 import style from './App.module.css';
 import { EditTree } from './components/editTree/EditTree';
 import FolderStructureContext from './context/FolderStructureContext';
 import OutPut from './components/outPut/outPut';
+import ConfigurationProvider from './context/ConfigurationContext';
+import ConfigModal from './components/ConfigModal/ConfigModal';
+import { useState } from 'react';
 function App() {
-   //return true if navigator is edge, chrome or opera
-   const canIuseShowDirectoryPicker = useBrowserDetection();
+   const [openModal, setOpenModal] = useState(false);
 
    return (
       <>
          <FolderStructureContext>
             <ChakraProvider>
-               <Header />
+               <Header
+                  handleConfigButton={() => {
+                     setOpenModal(true);
+                  }}
+               />
                <div className={style.containerPage}>
-                  <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
-                     Import Folders
-                  </ImportFolders>
-                  <div className={style.principalExperience}>
-                     <EditTree></EditTree>
+                  <EditTree></EditTree>
+                  <ConfigurationProvider>
                      <OutPut></OutPut>
-                  </div>
+                     <ConfigModal isOpen={{ openModal, setOpenModal }}></ConfigModal>
+                  </ConfigurationProvider>
                </div>
             </ChakraProvider>
          </FolderStructureContext>

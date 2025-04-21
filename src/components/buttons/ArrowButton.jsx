@@ -10,7 +10,8 @@ export default function ArrowButton({
    const Button = emotionStyled.button(() => ({
       backgroundColor: 'none',
       display: 'block',
-      width: 'fit-content',
+      width: 'fit-content ',
+      height: 'fit-content',
       borderRadius: borderRadius,
       transform: right
          ? 'rotateZ(90deg)'

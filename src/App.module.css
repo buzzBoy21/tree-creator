@@ -1,18 +1,12 @@
 .containerPage {
-   flex-grow: 2;
+   background-color: white;
    display: flex;
-   flex-direction: column;
-   align-items: center;
-
-   /* padding-top: 2em;
-   gap: 1.5rem; */
-   height: 100%;
-}
-
-.principalExperience {
-   flex-grow: 1;
-   display: flex;
+   flex-wrap: nowrap;
    width: 100%;
-   flex-wrap: wrap;
-   /* gap: 1em; */
+   height: 100%; /* Añadido para que ocupe todo el espacio disponible */
+   overflow: hidden;
+   gap: 1rem;
+   & > div {
+      max-width: 50%;
+   }
 }

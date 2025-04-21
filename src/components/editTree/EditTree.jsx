@@ -1,7 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Alert, AlertIcon } from '@chakra-ui/react';
 import style from './EditTree.module.css';
 import Folder from '../folder/Folder';
-import { useContext, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { FoldersContext } from '../../context/FolderStructureContext';
 export function EditTree() {
    const [context, setContext] = useContext(FoldersContext);

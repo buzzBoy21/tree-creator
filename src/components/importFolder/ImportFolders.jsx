@@ -13,14 +13,20 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
          const fileList = event.target.files;
          console.log(fileList);
          const arrayFiles = parseToArray(fileList);
+         if (arrayFiles.length === 0) {
+            alert(
+               'No files found in the selected folder. Please select and upload  folder with files.'
+            );
+            return;
+         }
 
          const arrayWithOutDuplicateURL = eliminateDuplicateURL(arrayFiles);
 
-         const [finalyStructure, highestId] = buildStructure(
+         const [finalStructure, highestId] = buildStructure(
             arrayWithOutDuplicateURL,
             context.highestId
          );
-         setContext({ folders: finalyStructure, highestId: highestId });
+         setContext({ folders: finalStructure, highestId: highestId });
       }
    }
    return useShowDirectoryPicker ? (

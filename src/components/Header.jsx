@@ -1,9 +1,22 @@
-import logo from './../assets/react.svg';
+import { useBrowserDetection } from '../hook/useBrowserDetection';
 import style from './header.module.css';
-export function Header() {
+import { ImportFolders } from './importFolder/ImportFolders';
+import logo from './../assets/logo.svg';
+import { Button } from '@chakra-ui/react';
+export function Header({ handleConfigButton = () => {} }) {
+   //return true if navigator is edge, chrome or opera
+   const canIuseShowDirectoryPicker = useBrowserDetection();
    return (
       <header className={style.header}>
-         <img src={logo} alt="dsadsa" style={{ height: '100%', width: 'auto' }} />
+         <img src={logo} alt="brand logo" style={{ height: '2em', width: 'auto' }} />
+         <div className={style.mainPart}>
+            <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
+               Import Folders
+            </ImportFolders>
+            <Button colorScheme="gray" variant="outline" onClick={handleConfigButton}>
+               Config
+            </Button>
+         </div>
       </header>
    );
 }
