@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useTransition, useRef } from 'react';
+import { useContext, useEffect, useState, useTransition, useRef, useLayoutEffect } from 'react';
 import style from './outPut.module.css';
 import { FoldersContext } from '../../context/FolderStructureContext';
 import { makeOutPut } from '../../utils/makeOutPut.jsx';
@@ -8,6 +8,8 @@ import { ConfigurationContext } from '../../context/ConfigurationContext';
 import { Spinner } from '@chakra-ui/react';
 import cameraIcon from './../../assets/camera.svg';
 import html2canvas from 'html2canvas';
+import { makeOutPut0_5 } from '../../utils/makeOutPut0.5.js';
+import { time } from 'framer-motion/client';
 
 export default function OutPut() {
    const [context, seContext] = useContext(FoldersContext);
@@ -44,8 +46,21 @@ export default function OutPut() {
    }, [context, configurationContext]);
 
    const copyToClipboard = () => {
+      const outPutWithOutColor =
+         '```' +
+         makeOutPut0_5(
+            context.folders,
+            configurationContext.indentation,
+
+            configurationContext.tabulationPerFolder,
+            configurationContext.showFolderSlash,
+            configurationContext.indicateCommentWith,
+            configurationContext.maxCommentWidth
+         ) +
+         '```';
+
       navigator.clipboard
-         .writeText(outPutText)
+         .writeText(outPutWithOutColor)
          .then(() => {
             alert('Text copied to clipboard!');
          })
@@ -54,18 +69,24 @@ export default function OutPut() {
          });
    };
    const createCanvasAndPrint = () => {
-      setIsTakingPicture(true);
-      html2canvas(onlyOutPutRef.current).then((canvas) => {
+      html2canvas(onlyOutPutRef.current, {
+         backgroundColor: `${configurationContext.colorBackground.color}${
+            configurationContext.colorBackground.alpha.length < 2
+               ? '0' + configurationContext.colorBackground.alpha
+               : configurationContext.colorBackground.alpha
+         }`,
+      }).then((canvas) => {
          // document.body.appendChild(canvas);
          const img = canvas.toDataURL('image/png');
          const link = document.createElement('a');
          link.href = img;
          link.download = 'tree-folder.png';
+
          link.click();
-         link.remove();
       });
-      setIsTakingPicture(false);
    };
+
+   console.log(isTakingPicture, 'setIsTakingPicture');
    return (
       <div
          className={style.container}
@@ -111,16 +132,7 @@ export default function OutPut() {
                         />
                      </Button>
                   </div>
-                  <div
-                     className={style.onlyText}
-                     style={{
-                        backgroundColor:
-                           configurationContext.colorBackground.color +
-                           (configurationContext.colorBackground.alpha.length < 2)
-                              ? '' + configurationContext.colorBackground.alpha
-                              : configurationContext.colorBackground.alpha,
-                     }}
-                     ref={onlyOutPutRef}>
+                  <div className={style.onlyText} ref={onlyOutPutRef}>
                      {outPutText}
                   </div>
                </>

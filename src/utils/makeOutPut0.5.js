@@ -1,4 +1,4 @@
-export function makeOutPut(
+export function makeOutPut0_5(
    folderStructure,
    identation = '',
    tabulationPerFolder,
@@ -47,7 +47,7 @@ export function makeOutPut(
             (index === ArraylenghtFolders - 1
                ? tabulationPerFolder.withOutLine
                : tabulationPerFolder.withLine);
-         result += makeOutPut(
+         result += makeOutPut0_5(
             folder.childrens,
             newIdentation,
             tabulationPerFolder,
