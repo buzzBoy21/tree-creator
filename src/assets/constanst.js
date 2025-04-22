@@ -1,7 +1,9 @@
 export const defaultConfiguration = {
-   colorBackground: { color: '#9f9f9f', alpha: 'FF' },
-   colorComment: { color: '#000000', alpha: 'FF' },
-   colorBranch: { color: '#000000', alpha: 'FF' },
+   colorBackground: { color: '#1e1e2e', alpha: 'FF' },
+   colorComment: { color: '#bfc7d5', alpha: 'FF' },
+   colorBranch: { color: '#5c6370', alpha: 'FF' },
+   folderColor: { color: '#82aaff', alpha: 'FF' },
+   slashColor: { color: '#A6B8D9', alpha: 'FF' },
    indentation: '',
    showFolderSlash: '/',
    showComment: true,

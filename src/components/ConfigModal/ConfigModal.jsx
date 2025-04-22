@@ -46,9 +46,11 @@ function ConfigModal({ isOpen }) {
       getConfiguration.indicateCommentWith
    );
 
+   const [folderColor, setFolderColor] = useState(getConfiguration.folderColor);
    const [backgroundColor, setBackgroundColor] = useState(getConfiguration.colorBackground);
    const [commentColor, setCommentColor] = useState(getConfiguration.colorComment);
    const [branchColor, setBranchColor] = useState(getConfiguration.colorBranch);
+   const [slashColor, setSlashColor] = useState(getConfiguration.slashColor);
 
    const onClose = () => {
       const tabulationPerFolderToStore = {
@@ -60,6 +62,8 @@ function ConfigModal({ isOpen }) {
          colorBackground: backgroundColor,
          colorComment: commentColor,
          colorBranch: branchColor,
+         slashColor: slashColor,
+         folderColor: folderColor,
          showFolderSlash: showFolderSlash ? '/' : '',
          showComment: showCommentSwitch,
          indentation: identationToStore,
@@ -83,6 +87,8 @@ function ConfigModal({ isOpen }) {
       setBackgroundColor(defaultConfiguration.colorBackground);
       setCommentColor(defaultConfiguration.colorComment);
       setBranchColor(defaultConfiguration.colorBranch);
+      setFolderColor(defaultConfiguration.folderColor);
+      setSlashColor(defaultConfiguration.slashColor);
    };
    return (
       <Modal isOpen={isOpen.openModal} scrollBehavior="inside">
@@ -190,6 +196,17 @@ function ConfigModal({ isOpen }) {
                   />
                </FormControl>
                <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Folder color</FormLabel>
+
+                  <ColorPicker
+                     defaultValue={folderColor}
+                     onChange={(value) => {
+                        setFolderColor(value);
+                     }}
+                     value={folderColor}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Comment color</FormLabel>
 
                   <ColorPicker
@@ -220,6 +237,17 @@ function ConfigModal({ isOpen }) {
                         setBranchColor(value);
                      }}
                      value={branchColor}
+                  />
+               </FormControl>
+               <FormControl display="flex" alignItems="center" mt={4}>
+                  <FormLabel mb="0">Slash color</FormLabel>
+
+                  <ColorPicker
+                     defaultValue={slashColor}
+                     onChange={(value) => {
+                        setSlashColor(value);
+                     }}
+                     value={slashColor}
                   />
                </FormControl>
             </ModalBody>

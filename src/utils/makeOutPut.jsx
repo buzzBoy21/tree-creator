@@ -5,14 +5,16 @@ export function makeOutPut(
    identation = '',
    tabulationPerFolder,
    showFolderSlash,
+   showComment,
    indicateCommentWith,
    maxLineLength,
    colorComment,
-   colorBranch
+   colorBranch,
+   folderColor,
+   slashColor
 ) {
    let result = [];
    // parser all attributes to use in recursion
-   console.log('aaaaa', colorComment, 'bbbb', colorBranch);
    folderStructure.forEach((folder, index) => {
       const ArraylenghtFolders = folderStructure.length;
       let cubit = '';
@@ -31,23 +33,25 @@ export function makeOutPut(
       }
       const allLineWithName = (
          <>
-            {cubit}
-            {folder.name}
-            {showFolderSlash}
+            <span style={{ color: folderColor }}>
+               {cubit}
+               {folder.name}
+            </span>
+            <span style={{ color: slashColor }}>{showFolderSlash}</span>
          </>
       );
-      const lineWithOutTags = identation + '├──' + folder.name + showFolderSlash;
-      console.log('identation', identation);
-      console.log('allLineWithName', allLineWithName.props.children);
       result.push(allLineWithName);
-      if (folder.description) {
+
+      const lineWithOutTags = identation + '├──' + folder.name + showFolderSlash; //To calculate the length of the line with folder name and the slash
+
+      if (folder.description && showComment) {
          const eachLine = splitTextByLength(folder.description, maxLineLength).split('\n');
          result.push(
             <>
-               {indicateCommentWith}
                <pre style={{ color: colorComment, display: 'inline', fontFamily: 'monospace' }}>
+                  {indicateCommentWith}
                   {eachLine[0]}
-               </pre>{' '}
+               </pre>
                <br />
             </>
          );
@@ -87,10 +91,13 @@ export function makeOutPut(
                newIdentation,
                tabulationPerFolder,
                showFolderSlash,
+               showComment,
                indicateCommentWith,
                maxLineLength,
                colorComment,
-               colorBranch
+               colorBranch,
+               folderColor,
+               slashColor
             )
          );
       }

@@ -44,7 +44,7 @@ const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, va
             ref={ref}
             type="color"
             defaultValue={colorAndAlpha.color}
-            value={colorAndAlpha.color}
+            value={value.color}
             onChange={(value) => {
                handleChange(value.target.value);
             }}
@@ -60,7 +60,7 @@ const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, va
                onChange={(v) => handleChangeAlpha(v)}
                onMouseEnter={() => setShowTooltip(true)}
                onMouseLeave={() => setShowTooltip(false)}
-               value={parseInt(colorAndAlpha.alpha, 16)}>
+               value={parseInt(value.alpha, 16)}>
                <SliderMark value={63.75} mt="1" ml="-2.5" fontSize="sm">
                   25%
                </SliderMark>
