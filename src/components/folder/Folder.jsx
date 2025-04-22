@@ -77,7 +77,6 @@ const Folder = memo(function Folder({
                <p>{name} </p>
             </div>
             <ul>
-               <li>{idFolder}</li>
                {brotherDown && (
                   <li>
                      {' '}

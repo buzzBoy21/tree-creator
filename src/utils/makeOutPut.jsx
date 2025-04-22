@@ -1,0 +1,177 @@
+import React from 'react';
+
+export function makeOutPut(
+   folderStructure,
+   identation = '',
+   tabulationPerFolder,
+   showFolderSlash,
+   indicateCommentWith,
+   maxLineLength,
+   colorComment,
+   colorBranch
+) {
+   let result = [];
+   // parser all attributes to use in recursion
+   console.log('aaaaa', colorComment, 'bbbb', colorBranch);
+   folderStructure.forEach((folder, index) => {
+      const ArraylenghtFolders = folderStructure.length;
+      let cubit = '';
+      if (ArraylenghtFolders - 1 === index) {
+         cubit = (
+            <>
+               <span style={{ color: colorBranch }}>{identation}└──</span>
+            </>
+         );
+      } else {
+         cubit = (
+            <>
+               <span style={{ color: colorBranch }}>{identation}├──</span>
+            </>
+         );
+      }
+      const allLineWithName = (
+         <>
+            {cubit}
+            {folder.name}
+            {showFolderSlash}
+         </>
+      );
+      const lineWithOutTags = identation + '├──' + folder.name + showFolderSlash;
+      console.log('identation', identation);
+      console.log('allLineWithName', allLineWithName.props.children);
+      result.push(allLineWithName);
+      if (folder.description) {
+         const eachLine = splitTextByLength(folder.description, maxLineLength).split('\n');
+         result.push(
+            <>
+               {indicateCommentWith}
+               <pre style={{ color: colorComment, display: 'inline', fontFamily: 'monospace' }}>
+                  {eachLine[0]}
+               </pre>{' '}
+               <br />
+            </>
+         );
+         for (let i = 1; i < eachLine.length; i++) {
+            result.push(
+               <>
+                  {generateIndentation(
+                     identation,
+                     ArraylenghtFolders,
+                     tabulationPerFolder,
+                     index,
+                     lineWithOutTags.length + indicateCommentWith.length, // to know how many spaces I should add after the last vertical line
+                     folder.childrens.length > 0,
+                     colorBranch,
+                     colorComment
+                  )}
+
+                  <pre style={{ color: colorComment, display: 'inline', fontFamily: 'monospace' }}>
+                     {eachLine[i]}
+                  </pre>
+                  <br />
+               </>
+            );
+         }
+      } else {
+         result.push(<br />);
+      }
+      if (folder.childrens.length > 0) {
+         const newIdentation =
+            identation +
+            (index === ArraylenghtFolders - 1
+               ? tabulationPerFolder.withOutLine
+               : tabulationPerFolder.withLine);
+         result.push(
+            makeOutPut(
+               folder.childrens,
+               newIdentation,
+               tabulationPerFolder,
+               showFolderSlash,
+               indicateCommentWith,
+               maxLineLength,
+               colorComment,
+               colorBranch
+            )
+         );
+      }
+   });
+   return result;
+}
+
+/**
+ *
+ * @param {*} identation
+ * @param {*} ArraylenghtFolders
+ * @param {*} tabulationPerFolder
+ * @param {*} index
+ * @param {*} spaceLength Is the empty space just before the comment
+ * @returns
+ */
+function generateIndentation(
+   indentation,
+   ArraylenghtFolders,
+   tabulationPerFolder,
+   index,
+   spaceLength,
+   hasChildren,
+   colorBranch
+) {
+   console.log(
+      'space',
+      spaceLength,
+      'indentation',
+      indentation.length,
+      'tabulationPerFolder',
+      tabulationPerFolder.withOutLine.length
+   );
+   const result = (
+      <>
+         <span style={{ color: colorBranch }}>{indentation}</span>
+         {index === ArraylenghtFolders - 1 ? (
+            <span style={{ color: colorBranch }}>{tabulationPerFolder.withOutLine}</span>
+         ) : (
+            <span style={{ color: colorBranch }}>{tabulationPerFolder.withLine}</span>
+         )}
+         {hasChildren ? (
+            <>
+               <span style={{ color: colorBranch }}>
+                  │
+                  {repeatCharacter(
+                     '\u00A0',
+                     spaceLength - indentation.length - tabulationPerFolder.withOutLine.length - 1
+                  )}
+               </span>
+            </>
+         ) : (
+            <span>
+               <>
+                  {repeatCharacter(
+                     '\u00A0',
+                     spaceLength - indentation.length - tabulationPerFolder.withOutLine.length
+                  )}
+               </>
+            </span>
+         )}
+      </>
+   );
+   return result;
+}
+
+const repeatCharacter = (character, times) => {
+   if (times <= 0) {
+      return '';
+   }
+
+   const characters = Array(times).fill(character);
+   return characters.map((char, index) =>
+      React.createElement(
+         'span',
+         { key: index, style: { display: 'inline', fontFamily: 'monospace' } },
+         char
+      )
+   );
+};
+
+function splitTextByLength(text, length) {
+   return text.replace(new RegExp(`(?![^\\n]{1,${length}}$)([^\\n]{1,${length}})\\s`, 'g'), '$1\n');
+}

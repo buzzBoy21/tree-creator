@@ -1,20 +1,33 @@
-import { useContext, useEffect, useState, useTransition } from 'react';
+import { useContext, useEffect, useState, useTransition, useRef } from 'react';
 import style from './outPut.module.css';
 import { FoldersContext } from '../../context/FolderStructureContext';
-import { makeOutPut } from '../../utils/makeOutPut';
+import { makeOutPut } from '../../utils/makeOutPut.jsx';
 import { Button } from '@chakra-ui/react';
 import copyTextIcon from '../../assets/copy-text.svg';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
 import { Spinner } from '@chakra-ui/react';
+import cameraIcon from './../../assets/camera.svg';
+import html2canvas from 'html2canvas';
+
 export default function OutPut() {
    const [context, seContext] = useContext(FoldersContext);
    const [configurationContext, setConfigurationContext] = useContext(ConfigurationContext);
    const [outPutText, setOutPutText] = useState('');
    const [isPending, startTransition] = useTransition();
+   const [isTakingPicture, setIsTakingPicture] = useState(false);
+   const onlyOutPutRef = useRef(null);
    useEffect(() => {
+      const commentColor = configurationContext.colorComment.color.concat(
+         configurationContext.colorComment.alpha.length < 2
+            ? '0' + configurationContext.colorComment.alpha
+            : configurationContext.colorComment.alpha
+      );
+      const branchColor = configurationContext.colorBranch.color.concat(
+         configurationContext.colorBranch.alpha.length < 2
+            ? '0' + configurationContext.colorBranch.alpha
+            : configurationContext.colorBranch.alpha
+      );
       startTransition(() => {
-         console.log('configurationContext', configurationContext);
-
          const outPut = makeOutPut(
             context.folders,
             configurationContext.indentation,
@@ -22,9 +35,10 @@ export default function OutPut() {
             configurationContext.tabulationPerFolder,
             configurationContext.showFolderSlash,
             configurationContext.indicateCommentWith,
-            configurationContext.maxCommentWidth
+            configurationContext.maxCommentWidth,
+            commentColor,
+            branchColor
          );
-         console.log('outPut', outPut);
          setOutPutText(outPut);
       });
    }, [context, configurationContext]);
@@ -39,32 +53,76 @@ export default function OutPut() {
             console.error('Failed to copy text: ', err);
          });
    };
+   const createCanvasAndPrint = () => {
+      setIsTakingPicture(true);
+      html2canvas(onlyOutPutRef.current).then((canvas) => {
+         // document.body.appendChild(canvas);
+         const img = canvas.toDataURL('image/png');
+         const link = document.createElement('a');
+         link.href = img;
+         link.download = 'tree-folder.png';
+         link.click();
+         link.remove();
+      });
+      setIsTakingPicture(false);
+   };
    return (
       <div
          className={style.container}
-         style={{ backgroundColor: configurationContext.colorBackground }}>
+         style={{
+            backgroundColor:
+               configurationContext.colorBackground.color +
+               (configurationContext.colorBackground.alpha.length < 2
+                  ? '0' + configurationContext.colorBackground.alpha
+                  : configurationContext.colorBackground.alpha),
+         }}>
          {isPending ? (
             <Spinner />
          ) : (
-            outPutText !== '' && (
+            outPutText !== '' &&
+            !isTakingPicture && (
                <>
-                  <Button
-                     padding={'0.5em'}
-                     aspectRatio={'1/1'}
-                     height={'3em'}
-                     onClick={copyToClipboard}
-                     position={'fixed'}
-                     zIndex={100}
-                     bottom={'2em'}
-                     right={'2em'}>
-                     <img
-                        src={copyTextIcon}
-                        alt="copy text"
-                        title="copy all tree"
-                        style={{ height: '2em' }}
-                     />
-                  </Button>
-                  {outPutText}
+                  <div className={style.copyContainer}>
+                     <Button
+                        display={'block'}
+                        padding={'0.5em'}
+                        aspectRatio={'1/1'}
+                        height={'3em'}
+                        onClick={createCanvasAndPrint}
+                        marginBottom={'1em'}>
+                        <img
+                           src={cameraIcon}
+                           alt="copy text"
+                           title="copy all tree"
+                           style={{ height: '2em' }}
+                        />
+                     </Button>
+                     <Button
+                        display={'block'}
+                        padding={'0.5em'}
+                        aspectRatio={'1/1'}
+                        height={'3em'}
+                        onClick={copyToClipboard}>
+                        <img
+                           src={copyTextIcon}
+                           alt="copy text"
+                           title="copy all tree"
+                           style={{ height: '2em' }}
+                        />
+                     </Button>
+                  </div>
+                  <div
+                     className={style.onlyText}
+                     style={{
+                        backgroundColor:
+                           configurationContext.colorBackground.color +
+                           (configurationContext.colorBackground.alpha.length < 2)
+                              ? '' + configurationContext.colorBackground.alpha
+                              : configurationContext.colorBackground.alpha,
+                     }}
+                     ref={onlyOutPutRef}>
+                     {outPutText}
+                  </div>
                </>
             )
          )}

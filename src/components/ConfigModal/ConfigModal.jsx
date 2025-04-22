@@ -31,12 +31,7 @@ function generateSpacesWithLine(count) {
 
 function ConfigModal({ isOpen }) {
    const [getConfiguration, setConfiguration] = useContext(ConfigurationContext);
-   // const showFolderSwitch = useRef(null);
-   // const showCommentSwitch = useRef(null);
-   // const heightBetweenLines = useRef(null);
-   // const maxCommentWidth = useRef(null);
-   // const indentation = useRef(null);
-   // const tabulationPerFolder = useRef(null);
+
    const [showFolderSlash, setShowFolderSlash] = useState(getConfiguration.showFolderSlash === '/');
    const [showCommentSwitch, setShowCommentSwitch] = useState(getConfiguration.showComment);
    const [heightBetweenLines, setHeightBetweenLines] = useState(
@@ -99,7 +94,7 @@ function ConfigModal({ isOpen }) {
                   onClose();
                }}
             />
-            <ModalBody>
+            <ModalBody gap={2} display="flex" flexDirection="column">
                <FormControl display="flex" alignItems="center">
                   <FormLabel htmlFor="showFolderSlash" mb="0">
                      Show folder slash
