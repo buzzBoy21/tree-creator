@@ -7,8 +7,10 @@ import copyTextIcon from '../../assets/copy-text.svg';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
 import { Spinner } from '@chakra-ui/react';
 import cameraIcon from './../../assets/camera.svg';
+import markDownIcon from './../../assets/markdown.svg';
 import html2canvas from 'html2canvas';
 import { makeOutPut0_5 } from '../../utils/makeOutPut0.5.js';
+import { makeOutPut0_5markDown } from '../../utils/makeOutPut0.5MarkDown.js';
 
 export default function OutPut() {
    const [context] = useContext(FoldersContext);
@@ -16,6 +18,7 @@ export default function OutPut() {
    const [outPutText, setOutPutText] = useState('');
    const [, startTransition] = useTransition();
    const onlyOutPutRef = useRef(null);
+
    useEffect(() => {
       const commentColor = configurationContext.colorComment.color.concat(
          configurationContext.colorComment.alpha.length < 2
@@ -57,18 +60,15 @@ export default function OutPut() {
    }, [context, configurationContext]);
 
    const copyToClipboard = () => {
-      const outPutWithOutColor =
-         '```' +
-         makeOutPut0_5(
-            context.folders,
-            configurationContext.indentation,
+      const outPutWithOutColor = makeOutPut0_5(
+         context.folders,
+         configurationContext.indentation,
 
-            configurationContext.tabulationPerFolder,
-            configurationContext.showFolderSlash,
-            configurationContext.indicateCommentWith,
-            configurationContext.maxCommentWidth
-         ) +
-         '```';
+         configurationContext.tabulationPerFolder,
+         configurationContext.showFolderSlash,
+         configurationContext.indicateCommentWith,
+         configurationContext.maxCommentWidth
+      );
 
       navigator.clipboard
          .writeText(outPutWithOutColor)
@@ -96,7 +96,58 @@ export default function OutPut() {
          link.click();
       });
    };
+   const copyToClipBoardToMarkdown = () => {
+      const commentColor = configurationContext.colorComment.color.concat(
+         configurationContext.colorComment.alpha.length < 2
+            ? '0' + configurationContext.colorComment.alpha
+            : configurationContext.colorComment.alpha
+      );
+      const branchColor = configurationContext.colorBranch.color.concat(
+         configurationContext.colorBranch.alpha.length < 2
+            ? '0' + configurationContext.colorBranch.alpha
+            : configurationContext.colorBranch.alpha
+      );
+      const folderColor = configurationContext.folderColor.color.concat(
+         configurationContext.folderColor.alpha.length < 2
+            ? '0' + configurationContext.folderColor.alpha
+            : configurationContext.folderColor.alpha
+      );
+      const slashColor = configurationContext.slashColor.color.concat(
+         configurationContext.slashColor.alpha.length < 2
+            ? '0' + configurationContext.slashColor.alpha
+            : configurationContext.slashColor.alpha
+      );
+      const backgroundColor =
+         configurationContext.colorBackground.color +
+         (configurationContext.colorBackground.alpha.length < 2
+            ? '0' + configurationContext.colorBackground.alpha
+            : configurationContext.colorBackground.alpha);
 
+      const outPutToMarkDown =
+         `<pre style="font-family:monospace;line-height:1em;background-color:${backgroundColor}">` +
+         makeOutPut0_5markDown(
+            context.folders,
+            configurationContext.indentation,
+            configurationContext.tabulationPerFolder,
+            configurationContext.showFolderSlash,
+            configurationContext.showComment,
+            configurationContext.indicateCommentWith,
+            configurationContext.maxCommentWidth,
+            commentColor,
+            branchColor,
+            folderColor,
+            slashColor
+         ) +
+         '</pre>';
+      navigator.clipboard
+         .writeText(outPutToMarkDown)
+         .then(() => {
+            alert('Text copied to clipboard!');
+         })
+         .catch((err) => {
+            console.error('Failed to copy text: ', err);
+         });
+   };
    return (
       <div
          className={style.container}
@@ -120,7 +171,21 @@ export default function OutPut() {
                      <img
                         src={cameraIcon}
                         alt="copy text"
-                        title="copy all tree"
+                        title="download output image"
+                        style={{ height: '2em' }}
+                     />
+                  </Button>
+                  <Button
+                     display={'block'}
+                     padding={'0.5em'}
+                     aspectRatio={'1/1'}
+                     height={'3em'}
+                     onClick={copyToClipBoardToMarkdown}
+                     marginBottom={'1em'}>
+                     <img
+                        src={markDownIcon}
+                        alt="copy text"
+                        title="download output image"
                         style={{ height: '2em' }}
                      />
                   </Button>
@@ -133,7 +198,7 @@ export default function OutPut() {
                      <img
                         src={copyTextIcon}
                         alt="copy text"
-                        title="copy all tree"
+                        title="copy plain text"
                         style={{ height: '2em' }}
                      />
                   </Button>

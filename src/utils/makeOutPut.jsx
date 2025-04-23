@@ -123,14 +123,6 @@ function generateIndentation(
    hasChildren,
    colorBranch
 ) {
-   console.log(
-      'space',
-      spaceLength,
-      'indentation',
-      indentation.length,
-      'tabulationPerFolder',
-      tabulationPerFolder.withOutLine.length
-   );
    const result = (
       <>
          <span style={{ color: colorBranch }}>{indentation}</span>
