@@ -18,25 +18,35 @@ export function makeOutPut0_5markDown(
       const ArraylenghtFolders = folderStructure.length;
       let cubit = '';
       if (ArraylenghtFolders - 1 === index) {
-         cubit = identation + `<span style="color:${colorBranch}">` + '└──' + '</span>';
+         cubit =
+            `<span style="color:${colorBranch};text-wrap: nowrap">` +
+            identation +
+            '└──' +
+            '</span>';
       } else {
-         cubit = identation + `<span style="color:${colorBranch}">` + '├──' + '</span>';
+         cubit =
+            `<span style="color:${colorBranch};text-wrap: nowrap">` +
+            identation +
+            '├──' +
+            '</span>';
       }
       const allLineWithName =
-         `<span style="color:${folderColor}">` +
          cubit +
+         `<span style="color:${folderColor};text-wrap: nowrap">` +
          folder.name +
          '</span>' +
-         `<span style="color:${slashColor}">` +
+         `<span style="color:${slashColor};text-wrap: nowrap">` +
          showFolderSlash +
          '</span>';
 
       result += allLineWithName;
+      const lineWithOutTags = identation + '├──' + folder.name + showFolderSlash; //To calculate the length of the line with folder name and the slash
+
       if (folder.description && showComment) {
          const eachLine = splitTextByLength(folder.description, maxLineLength).split('\n');
          // const eachLine = folder.description.split('\n');
          result +=
-            `<span style="color:${colorComment}">` +
+            `<span style="color:${colorComment};text-wrap: nowrap">` +
             indicateCommentWith +
             eachLine[0] +
             '\n' +
@@ -48,11 +58,11 @@ export function makeOutPut0_5markDown(
                   ArraylenghtFolders,
                   tabulationPerFolder,
                   index,
-                  allLineWithName.length + indicateCommentWith.length, //to know how many space I should after last vertical line
+                  lineWithOutTags.length + indicateCommentWith.length, //to know how many space I should after last vertical line
                   folder.childrens.length > 0,
                   colorBranch
                ) +
-               `<span style="color:${colorComment}">` +
+               `<span style="color:${colorComment};text-wrap: nowrap">` +
                eachLine[i] +
                '</span>' +
                '\n';
@@ -84,13 +94,6 @@ export function makeOutPut0_5markDown(
    return result;
 }
 
-function generateLinesOfComments(comment, maxComment) {
-   const lines = Math.ceil(comment.length / maxComment);
-   for (let i = 0; i < lines; i++) {
-      result.push(comment.slice(i * maxComment, (i + 1) * maxComment));
-   }
-   return result;
-}
 /**
  *
  * @param {*} identation
@@ -109,18 +112,15 @@ function generateIndentation(
    hasChildren,
    colorBranch
 ) {
-   console.log('hasChildren', hasChildren);
-
    const result =
+      `<span style="color:${colorBranch};text-wrap: nowrap">` +
       indentation +
       (index === ArraylenghtFolders - 1
          ? tabulationPerFolder.withOutLine
          : tabulationPerFolder.withLine) +
       (hasChildren
          ? // when there are children, I must add tabulation with line to make seen the tree
-           `<span style="color:${colorBranch}">` +
            '│' +
-           '</span>' +
            repeatCharacter(
               ' ',
               spaceLength - indentation.length - tabulationPerFolder.withOutLine.length - 1
@@ -129,7 +129,8 @@ function generateIndentation(
            repeatCharacter(
               ' ',
               spaceLength - indentation.length - tabulationPerFolder.withOutLine.length
-           ));
+           )) +
+      '</span>';
    return result;
 }
 
@@ -140,10 +141,5 @@ const repeatCharacter = (character, times) => {
    return character.repeat(times);
 };
 function splitTextByLength(text, length) {
-   // const result = [];
-   // for (let i = 0; i < text.length; i += length) {
-   //    result.push(text.slice(i, i + length));
-   // }
-   // return result;
    return text.replace(new RegExp(`(?![^\\n]{1,${length}}$)([^\\n]{1,${length}})\\s`, 'g'), '$1\n');
 }
