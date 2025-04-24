@@ -4,8 +4,8 @@
       <meta charset="UTF-8" />
       <link rel="icon" type="image/svg+xml" href="/vite.svg" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Vite + React</title>
-      <style rel="stylesheet" href="./src/utils/prism/prism.css"></style>
+      <title>Tree Creator</title>
+      <style rel="stylesheet" href="./src/assets/logo.svg"></style>
    </head>
 
    <body>
@@ -16,7 +16,17 @@
       <button id="selectFolderBtn">Seleccionar Carpeta2222</button>
       <ul id="fileList"></ul> -->
    </body>
-   <script src="./src/utils/prism/prism.js"></script>
+   <script>
+      const setFavicon = () => {
+         const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+         const link = document.querySelector('link[rel="icon"]');
+         link.href = isDark ? './src/assets/logo-dark.svg' : './src/assets/logo.svg';
+      };
+
+      setFavicon();
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+   </script>
    <script>
       //Logica para navegador google
       // document.getElementById('folderInput').addEventListener('change', function (event) {
