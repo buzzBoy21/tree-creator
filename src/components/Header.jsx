@@ -3,7 +3,7 @@ import style from './header.module.css';
 import { ImportFolders } from './importFolder/ImportFolders';
 import logo from './../assets/logo.svg';
 import { Button } from '@chakra-ui/react';
-export function Header({ handleConfigButton = () => {} }) {
+export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = () => {} }) {
    //return true if navigator is edge, chrome or opera
    const canIuseShowDirectoryPicker = useBrowserDetection();
    return (
@@ -13,6 +13,9 @@ export function Header({ handleConfigButton = () => {} }) {
             <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
                Import Folders
             </ImportFolders>
+            <Button colorScheme="gray" variant="outline" onClick={handleMoreInfoButton}>
+               Best Practices
+            </Button>
             <Button colorScheme="gray" variant="outline" onClick={handleConfigButton}>
                Config
             </Button>

@@ -73,7 +73,7 @@ function ConfigModal({ isOpen }) {
          indicateCommentWith: indicateCommentWith,
       });
       console.log('showFolderSlash', tabulationPerFolderToStore);
-      isOpen.setOpenModal(false);
+      isOpen.setOpenConfigModal(false);
    };
 
    const handleResetConfiguration = () => {
@@ -91,7 +91,7 @@ function ConfigModal({ isOpen }) {
       setSlashColor(defaultConfiguration.slashColor);
    };
    return (
-      <Modal isOpen={isOpen.openModal} scrollBehavior="inside">
+      <Modal isOpen={isOpen.openConfigModal} scrollBehavior="inside">
          <ModalOverlay />
          <ModalContent>
             <ModalHeader>⚙️Config </ModalHeader>

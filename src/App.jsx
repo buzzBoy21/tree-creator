@@ -7,24 +7,31 @@ import OutPut from './components/outPut/outPut';
 import ConfigurationProvider from './context/ConfigurationContext';
 import ConfigModal from './components/ConfigModal/ConfigModal';
 import { useState } from 'react';
+import HelpModal from './components/helpModal/HelpModal';
+
 function App() {
-   const [openModal, setOpenModal] = useState(false);
+   const [openConfigModal, setOpenConfigModal] = useState(false);
+   const [openHelpModal, setOpenHelpModal] = useState(false);
 
    return (
       <>
          <FolderStructureContext>
             <ChakraProvider>
                <Header
+                  handleMoreInfoButton={() => {
+                     setOpenHelpModal(true);
+                  }}
                   handleConfigButton={() => {
-                     setOpenModal(true);
+                     setOpenConfigModal(true);
                   }}
                />
                <div className={style.containerPage}>
                   <EditTree></EditTree>
                   <ConfigurationProvider>
                      <OutPut></OutPut>
-                     <ConfigModal isOpen={{ openModal, setOpenModal }}></ConfigModal>
+                     <ConfigModal isOpen={{ openConfigModal, setOpenConfigModal }}></ConfigModal>
                   </ConfigurationProvider>
+                  <HelpModal isOpen={{ openHelpModal, setOpenHelpModal }}></HelpModal>
                </div>
             </ChakraProvider>
          </FolderStructureContext>

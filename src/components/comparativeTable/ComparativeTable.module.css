@@ -1,0 +1,19 @@
+.table {
+   & > thead > tr > th:not(:first-child) {
+      text-align: center;
+   }
+   & > tbody > tr > td:not(:first-child):not(:has(p)) {
+      text-align: center;
+   }
+   & > tbody > tr > td:has(p) {
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+      text-align: left;
+      & > p {
+         width: 10em;
+         text-wrap: wrap;
+         font-size: 0.8em;
+      }
+   }
+}
