@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import style from './App.module.css';
 import { EditTree } from './components/editTree/EditTree';
 import FolderStructureContext from './context/FolderStructureContext';
-import OutPut from './components/outPut/outPut';
+import { OutPut } from './components/outPut/outPut';
 import ConfigurationProvider from './context/ConfigurationContext';
 import ConfigModal from './components/ConfigModal/ConfigModal';
 import { useState } from 'react';

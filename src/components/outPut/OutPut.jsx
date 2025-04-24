@@ -12,7 +12,7 @@ import html2canvas from 'html2canvas';
 import { makeOutPut0_5 } from '../../utils/makeOutPut0.5.js';
 import { makeOutPut0_5markDown } from '../../utils/makeOutPut0.5MarkDown.js';
 
-export default function OutPut() {
+export function OutPut() {
    const [context] = useContext(FoldersContext);
    const [configurationContext] = useContext(ConfigurationContext);
    const [outPutText, setOutPutText] = useState('');
