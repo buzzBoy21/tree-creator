@@ -1,8 +1,38 @@
-# React + Vite
+# 🌳 Tree Creator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and efficient tool to generate your project's folder structure in ASCII format.
 
-Currently, two official plugins are available:
+![preview](./assets/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
+
+-  🧠 Web-based, no installation required
+-  📂 Import, create, and delete folders with ease
+-  🧾 Real-time visualization of your project's folder tree
+-  🔧 High customization options (font color, background color, indentation, and more)
+   ![configuration image](./assets/configuration.png)
+-  🎨 Light/Dark theme support with customizable templates (see Best Practices)
+   <picture>
+      <!-- Big image for wide screens in dark mode -->
+      <source srcset="./assets/tree-folder-dark.png" media="(prefers-color-scheme: dark)" />
+
+  <source srcset="./assets/tree-folder-light.png" media="(prefers-color-scheme: light)" />
+
+  <img src="./assets/tree-folder-light.png" alt="Responsive image" />
+</picture>
+
+## 🧑‍💻 Contributing
+
+To contribute to the development of **Tree Creator**, follow these steps:
+
+1. Fork this repository
+2. Clone the project and run it locally
+
+```bash
+git clone https://github.com/your-username/tree-creator.git
+cd tree-creator
+npm install
+npm run dev
+```
+
+3. After end do pull request
