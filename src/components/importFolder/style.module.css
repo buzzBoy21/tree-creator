@@ -21,3 +21,9 @@
    background-color: var(--gray-200, #e2e8f0);
    cursor: pointer;
 }
+
+@media screen and (width<480px) {
+   .labelSelectLanguage {
+      width: 100%;
+   }
+}

@@ -17,8 +17,16 @@
       justify-content: flex-end;
       gap: 2em;
    }
-   /* & > img {
-      position: absolute;
-      left: 1em;
-   } */
+   & > .mainPart > .hamburger {
+      display: none;
+   }
+}
+
+@media screen and (width<500px) {
+   .mainPart > *:not(:last-child) {
+      display: none;
+   }
+   .header .mainPart > .hamburger {
+      display: block;
+   }
 }

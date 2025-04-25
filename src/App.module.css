@@ -10,3 +10,15 @@
       max-width: 50%;
    }
 }
+
+@media screen and (width<480px) {
+   .containerPage {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100lvw;
+      & > div {
+         max-width: none;
+         max-height: 50%;
+      }
+   }
+}

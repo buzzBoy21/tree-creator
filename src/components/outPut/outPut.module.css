@@ -22,3 +22,9 @@
    padding: 1em;
    width: fit-content;
 }
+@media screen and (width<480px) {
+   .container {
+      border-radius: 0px;
+      box-shadow:;
+   }
+}
