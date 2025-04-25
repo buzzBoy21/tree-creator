@@ -17,18 +17,17 @@ import {
    NumberInput,
    Input,
 } from '@chakra-ui/react';
-
-import React, { useContext, useEffect, useId, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
 import { defaultConfiguration } from '../../assets/constanst';
 import ColorPicker from '../colorPicker/ColorPicker';
+import PaletteColors from '../paletteColors/paletteColors';
 function generateSpaces(count) {
    return ' '.repeat(count);
 }
 function generateSpacesWithLine(count) {
    return '│' + ' '.repeat(count - 1);
 }
-
 function ConfigModal({ isOpen }) {
    const [getConfiguration, setConfiguration] = useContext(ConfigurationContext);
 
@@ -51,6 +50,7 @@ function ConfigModal({ isOpen }) {
    const [commentColor, setCommentColor] = useState(getConfiguration.colorComment);
    const [branchColor, setBranchColor] = useState(getConfiguration.colorBranch);
    const [slashColor, setSlashColor] = useState(getConfiguration.slashColor);
+   const [paletteChosen, setPaletteChosen] = useState(getConfiguration.paletteChosen);
 
    const onClose = () => {
       const tabulationPerFolderToStore = {
@@ -71,6 +71,7 @@ function ConfigModal({ isOpen }) {
          heightBetweenLines: heightBetweenLines,
          maxCommentWidth: maxCommentWidth,
          indicateCommentWith: indicateCommentWith,
+         paletteChosen: paletteChosen,
       });
       console.log('showFolderSlash', tabulationPerFolderToStore);
       isOpen.setOpenConfigModal(false);
@@ -89,6 +90,16 @@ function ConfigModal({ isOpen }) {
       setBranchColor(defaultConfiguration.colorBranch);
       setFolderColor(defaultConfiguration.folderColor);
       setSlashColor(defaultConfiguration.slashColor);
+      setPaletteChosen(defaultConfiguration.paletteChosen);
+   };
+
+   const changeColorsByPalettes = (colors, title) => {
+      setPaletteChosen(title);
+      setBackgroundColor(colors.colorBackground);
+      setCommentColor(colors.colorComment);
+      setBranchColor(colors.colorBranch);
+      setFolderColor(colors.folderColor);
+      setSlashColor(colors.slashColor);
    };
    return (
       <Modal isOpen={isOpen.openConfigModal} scrollBehavior="inside">
@@ -195,13 +206,21 @@ function ConfigModal({ isOpen }) {
                      }}
                   />
                </FormControl>
+               <FormControl>
+                  <FormLabel mb="0">Colors palettes</FormLabel>
+                  <PaletteColors
+                     onChange={changeColorsByPalettes}
+                     defaultValue={paletteChosen}
+                     value={paletteChosen}
+                  />
+               </FormControl>
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Folder color</FormLabel>
-
                   <ColorPicker
                      defaultValue={folderColor}
                      onChange={(value) => {
                         setFolderColor(value);
+                        setPaletteChosen('');
                      }}
                      value={folderColor}
                   />
@@ -213,6 +232,7 @@ function ConfigModal({ isOpen }) {
                      defaultValue={commentColor}
                      onChange={(value) => {
                         setCommentColor(value);
+                        setPaletteChosen('');
                      }}
                      value={commentColor}
                   />
@@ -224,6 +244,7 @@ function ConfigModal({ isOpen }) {
                      defaultValue={backgroundColor}
                      onChange={(value) => {
                         setBackgroundColor(value);
+                        setPaletteChosen('');
                      }}
                      value={backgroundColor}
                   />
@@ -235,6 +256,7 @@ function ConfigModal({ isOpen }) {
                      defaultValue={branchColor}
                      onChange={(value) => {
                         setBranchColor(value);
+                        setPaletteChosen('');
                      }}
                      value={branchColor}
                   />
@@ -246,6 +268,7 @@ function ConfigModal({ isOpen }) {
                      defaultValue={slashColor}
                      onChange={(value) => {
                         setSlashColor(value);
+                        setPaletteChosen('');
                      }}
                      value={slashColor}
                   />

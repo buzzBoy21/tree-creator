@@ -10,7 +10,9 @@ A simple and efficient tool to generate your project's folder structure in ASCII
 -  📂 Import, create, and delete folders with ease
 -  🧾 Real-time visualization of your project's folder tree
 -  🔧 High customization options (font color, background color, indentation, and more)
-   ![configuration image](./assets/configuration.png)
+
+<img src="./assets/configurationTop.png" alt="configuration image" style="width: 49%; display: inline-block;"> <img src="./assets/finalConfiguration.png" alt="configuration image" style="width: 49%; display: inline-block;">
+
 -  🎨 Light/Dark theme support with customizable templates (see Best Practices)
    <picture>
       <!-- Big image for wide screens in dark mode -->
