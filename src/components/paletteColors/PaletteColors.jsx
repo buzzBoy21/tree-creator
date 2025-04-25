@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { palettesColors } from '../../assets/constants';
 import PaletteColor from '../paletteColor/PaletteColor';
 import { Button } from '@chakra-ui/react';
-const PaletteColors = function PaletteColors({ onChange = () => {}, defaultValue, value }) {
+export default function PaletteColors({ onChange = () => {}, defaultValue, value }) {
    const [selectedColor, setSelectedColor] = useState(defaultValue);
    const containerRef = useRef(null);
    useEffect(() => {
@@ -89,6 +89,4 @@ const PaletteColors = function PaletteColors({ onChange = () => {}, defaultValue
          </div>
       </div>
    );
-};
-
-export default PaletteColors;
+}
