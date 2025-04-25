@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { palettesColors } from '../../assets/constanst';
+import { palettesColors } from '../../assets/constants';
 import PaletteColor from '../paletteColor/PaletteColor';
 import { Button } from '@chakra-ui/react';
 const PaletteColors = function PaletteColors({ onChange = () => {}, defaultValue, value }) {

@@ -19,9 +19,9 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
-import { defaultConfiguration } from '../../assets/constanst';
-import ColorPicker from '../colorPicker/ColorPicker';
-import PaletteColors from '../paletteColors/paletteColors';
+import { defaultConfiguration } from '../../assets/constants';
+import ColorPicker from './../colorPicker/ColorPicker';
+import PaletteColors from './../paletteColors/paletteColors';
 function generateSpaces(count) {
    return ' '.repeat(count);
 }

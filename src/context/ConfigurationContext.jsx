@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { defaultConfiguration } from '../assets/constanst';
+import { defaultConfiguration } from '../assets/constants';
 export const ConfigurationContext = createContext();
 
 function ConfigurationProvider({ children }) {
