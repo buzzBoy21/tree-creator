@@ -59,7 +59,7 @@ export function makeOutPut0_5markDown(
                   tabulationPerFolder,
                   index,
                   lineWithOutTags.length + indicateCommentWith.length, //to know how many space I should after last vertical line
-                  folder.childrens.length > 0,
+                  folder.children.length > 0,
                   colorBranch
                ) +
                `<span style="color:${colorComment};text-wrap: nowrap">` +
@@ -70,14 +70,14 @@ export function makeOutPut0_5markDown(
       } else {
          result += '\n';
       }
-      if (folder.childrens.length > 0) {
+      if (folder.children.length > 0) {
          const newIdentation =
             identation +
             (index === ArraylenghtFolders - 1
                ? tabulationPerFolder.withOutLine
                : tabulationPerFolder.withLine);
          result += makeOutPut0_5markDown(
-            folder.childrens,
+            folder.children,
             newIdentation,
             tabulationPerFolder,
             showFolderSlash,

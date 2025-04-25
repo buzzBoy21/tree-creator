@@ -64,7 +64,7 @@ export function makeOutPut(
                      tabulationPerFolder,
                      index,
                      lineWithOutTags.length + indicateCommentWith.length, // to know how many spaces I should add after the last vertical line
-                     folder.childrens.length > 0,
+                     folder.children.length > 0,
                      colorBranch,
                      colorComment
                   )}
@@ -79,7 +79,7 @@ export function makeOutPut(
       } else {
          result.push(<br />);
       }
-      if (folder.childrens.length > 0) {
+      if (folder.children.length > 0) {
          const newIdentation =
             identation +
             (index === ArraylenghtFolders - 1
@@ -87,7 +87,7 @@ export function makeOutPut(
                : tabulationPerFolder.withLine);
          result.push(
             makeOutPut(
-               folder.childrens,
+               folder.children,
                newIdentation,
                tabulationPerFolder,
                showFolderSlash,

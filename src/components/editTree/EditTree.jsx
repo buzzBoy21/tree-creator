@@ -3,9 +3,11 @@ import style from './EditTree.module.css';
 import Folder from '../folder/Folder';
 import { useContext, useState } from 'react';
 import { FoldersContext } from '../../context/FolderStructureContext';
+import { ImportFolders } from '../importFolder/ImportFolders';
+import { useBrowserDetection } from '../../hook/useBrowserDetection';
 export function EditTree() {
    const [context, setContext] = useContext(FoldersContext);
-
+   const canIuseShowDirectoryPicker = useBrowserDetection();
    return (
       <div className={style.container}>
          <Tabs isFitted variant="enclosed">
@@ -15,14 +17,32 @@ export function EditTree() {
             </TabList>
 
             <TabPanels className={style.editFolderContainer}>
-               <TabPanel>
-                  {context.folders.map((folder) => (
-                     <Folder
-                        key={folder.folderId}
-                        childrenFolders={folder.childrens}
-                        idFolder={folder.folderId}
-                        nameFolder={folder.name}></Folder>
-                  ))}
+               <TabPanel
+                  style={
+                     context.folders.length
+                        ? {}
+                        : {
+                             display: 'flex',
+                             flexDirection: 'column',
+                             justifyContent: 'center',
+                             alignItems: 'center',
+                          }
+                  }>
+                  {context.folders.length ? (
+                     context.folders.map((folder) => (
+                        <Folder
+                           key={folder.folderId}
+                           childrenFolders={folder.children}
+                           idFolder={folder.folderId}
+                           nameFolder={folder.name}></Folder>
+                     ))
+                  ) : (
+                     <div style={{ marginTop: '2em' }}>
+                        <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
+                           Import Folders
+                        </ImportFolders>
+                     </div>
+                  )}
                </TabPanel>
                <TabPanel>
                   <Alert status="warning">

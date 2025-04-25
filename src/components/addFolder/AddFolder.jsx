@@ -16,7 +16,7 @@ export default function AddFolder({ folderId }) {
          folderId: newId,
          name: newFolderName,
          description: '',
-         childrens: [],
+         children: [],
       });
       if (wasGood) {
          console.log('hola');

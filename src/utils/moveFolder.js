@@ -16,8 +16,8 @@ export function moveFolderUp(folderId, folderStructure) {
          folderStructure[currentIndex] = temporalFolder;
 
          return true;
-      } else if (element.childrens.length > 0) {
-         moveFolderUp(folderId, element.childrens);
+      } else if (element.children.length > 0) {
+         moveFolderUp(folderId, element.children);
       }
    });
 }
@@ -44,8 +44,8 @@ export function moveFolderDown(folderId, folderStructure) {
          }
 
          return true;
-      } else if (element.childrens.length > 0) {
-         moveFolderDown(folderId, element.childrens);
+      } else if (element.children.length > 0) {
+         moveFolderDown(folderId, element.children);
       }
    });
 }

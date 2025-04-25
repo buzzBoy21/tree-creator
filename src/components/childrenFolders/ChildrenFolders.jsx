@@ -10,7 +10,7 @@ export default function ChildrenFolders({ folders }) {
             key={folder.folderId}
             idFolder={folder.folderId}
             nameFolder={folder.name}
-            childrenFolders={folder.childrens}
+            childrenFolders={folder.children}
             brotherUp={brotherUp}
             brotherDown={brotherDown}
          />

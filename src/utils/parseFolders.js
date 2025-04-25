@@ -68,16 +68,16 @@ export function buildStructure(paths, startId) {
       // when any folder haven't the currentFolderName folder's name
       //if exist the name:
       //1. the interperter will not go to if
-      //2. As node.find return the finding node, the atributte childrens will pass to the addPashTotre (next if)
+      //2. As node.find return the finding node, the atributte children will pass to the addPashTotre (next if)
       if (!childNode) {
-         childNode = { folderId: id++, name: currentFolderName, description: '', childrens: [] };
+         childNode = { folderId: id++, name: currentFolderName, description: '', children: [] };
          node.push(childNode);
-         //The push can be within empyty root or inside previus node (thanks to addPathToTree(rest, childNode.childrens) )
+         //The push can be within empyty root or inside previus node (thanks to addPathToTree(rest, childNode.children) )
       }
 
       if (rest.length > 0) {
          //every time pass the array like the node
-         addPathToTree(rest, childNode.childrens);
+         addPathToTree(rest, childNode.children);
       }
    }
 

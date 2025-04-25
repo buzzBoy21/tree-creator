@@ -5,6 +5,6 @@ export function removeFolder(idFolder, folderStructure) {
          folderStructure.splice(index, 1);
          return true;
       }
-      if (element.childrens.length > 0) removeFolder(idFolder, element.childrens);
+      if (element.children.length > 0) removeFolder(idFolder, element.children);
    });
 }
