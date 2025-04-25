@@ -21,7 +21,7 @@ import { useContext, useState } from 'react';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
 import { defaultConfiguration } from '../../assets/constants';
 import ColorPicker from './../colorPicker/ColorPicker';
-import PaletteColors from './../paletteColors/paletteColors';
+import PaletteColors from './../paletteColors/PaletteColors';
 function generateSpaces(count) {
    return ' '.repeat(count);
 }
