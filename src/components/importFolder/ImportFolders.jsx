@@ -7,9 +7,11 @@ import { FoldersContext } from '../../context/FolderStructureContext';
 export function ImportFolders({ useShowDirectoryPicker, children }) {
    const [context, setContext] = useContext(FoldersContext);
    function handleImportFolder(event) {
-      if (useShowDirectoryPicker) {
-         console.log('google');
-      } else {
+      // in the future change for chrome file picker useShowDirectoryPicker=true -> chrome picker
+      if (useShowDirectoryPicker || !useShowDirectoryPicker) {
+         //change for chrome file picker
+         //    console.log('chrome');
+         // } else {
          const fileList = event.target.files;
          console.log(fileList);
          const arrayFiles = parseToArray(fileList);
@@ -30,9 +32,19 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
       }
    }
    return useShowDirectoryPicker ? (
-      <Button colorScheme="gray" variant="outline" onClick={handleImportFolder}>
-         {children}
-      </Button>
+      <>
+         <input
+            id="file"
+            className={style.inputSelectLanguage}
+            type="file"
+            webkitdirectory="true"
+            multiple
+            onChange={handleImportFolder}
+         />
+         <label htmlFor="file" className={style.labelSelectLanguage}>
+            {children}
+         </label>
+      </>
    ) : (
       <>
          <input

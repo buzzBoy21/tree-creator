@@ -5,7 +5,6 @@ import { makeOutPut } from '../../utils/makeOutPut.jsx';
 import { Button } from '@chakra-ui/react';
 import copyTextIcon from '../../assets/copy-text.svg';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
-import { Spinner } from '@chakra-ui/react';
 import cameraIcon from './../../assets/camera.svg';
 import markDownIcon from './../../assets/markdown.svg';
 import html2canvas from 'html2canvas';
