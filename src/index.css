@@ -12,6 +12,27 @@
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
 }
+::-webkit-scrollbar {
+   width: 10px;
+   height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+   background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+   background: #888;
+   border-radius: 1em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+   background: #555;
+}
+
 [theme-data='light'] {
    --first-background: hsl(0, 0%, 100%);
    --gray-200: #e2e8f0;
