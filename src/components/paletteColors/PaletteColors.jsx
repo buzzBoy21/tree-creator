@@ -3,7 +3,7 @@ import { palettesColors } from '../../assets/constants';
 import PaletteColor from '../paletteColor/PaletteColor';
 import { Button } from '@chakra-ui/react';
 export default function PaletteColors({ onChange = () => {}, defaultValue, value }) {
-   const [selectedColor, setSelectedColor] = useState(defaultValue);
+   const [selectedColor, setSelectedColor] = useState(value);
    const containerRef = useRef(null);
    useEffect(() => {
       // If there isn't a custom color

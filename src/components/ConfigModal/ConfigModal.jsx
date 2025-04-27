@@ -205,7 +205,7 @@ function ConfigModal({ isOpen, onClose }) {
                </FormControl>
                <FormControl>
                   <FormLabel mb="0">Colors palettes</FormLabel>
-                  {/* <PaletteColors onChange={changeColorsByPalettes} value={paletteChosen} /> */}
+                  <PaletteColors onChange={changeColorsByPalettes} value={paletteChosen} />
                </FormControl>
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Folder color</FormLabel>
