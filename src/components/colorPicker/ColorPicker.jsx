@@ -8,8 +8,8 @@ import {
    Tooltip,
 } from '@chakra-ui/react';
 
-const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, value }, ref) {
-   const [colorAndAlpha, setColorAndAlpha] = useState(defaultValue);
+const ColorPicker = forwardRef(function ColorPicker({ onChange, value }, ref) {
+   const [colorAndAlpha, setColorAndAlpha] = useState(value);
    const [showTooltip, setShowTooltip] = useState(false);
    let timeoutId = null;
 
@@ -43,7 +43,7 @@ const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, va
             }}
             ref={ref}
             type="color"
-            defaultValue={colorAndAlpha.color}
+            // defaultValue={colorAndAlpha.color}
             value={value.color}
             onChange={(value) => {
                handleChange(value.target.value);
@@ -53,7 +53,7 @@ const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, va
             <p style={{ fontSize: '0.7em' }}>Alpha</p>
             <Slider
                id="slider"
-               defaultValue={parseInt(colorAndAlpha.alpha, 16)}
+               // defaultValue={parseInt(colorAndAlpha.alpha, 16)}
                min={0}
                max={255}
                colorScheme="teal"
@@ -79,7 +79,7 @@ const ColorPicker = forwardRef(function ColorPicker({ defaultValue, onChange, va
                   color="white"
                   placement="top"
                   isOpen={showTooltip}
-                  label={`${parseInt(colorAndAlpha.alpha, 16)}`}>
+                  label={`${parseInt(value.alpha, 16)}`}>
                   <SliderThumb />
                </Tooltip>
             </Slider>

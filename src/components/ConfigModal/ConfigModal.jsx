@@ -118,8 +118,6 @@ function ConfigModal({ isOpen }) {
                   </FormLabel>
                   <Switch
                      id="showFolderSlash"
-                     // defaultChecked={showFolderSlash}
-                     defaultChecked={showCommentSwitch}
                      onChange={(e) => setShowFolderSlash(e.target.checked)}
                      isChecked={showFolderSlash}
                   />
@@ -130,7 +128,6 @@ function ConfigModal({ isOpen }) {
                   </FormLabel>
                   <Switch
                      id="showComment"
-                     defaultChecked={showCommentSwitch}
                      onChange={(e) => setShowCommentSwitch(e.target.checked)}
                      isChecked={showCommentSwitch}
                   />
@@ -138,7 +135,6 @@ function ConfigModal({ isOpen }) {
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Height between lines</FormLabel>
                   <NumberInput
-                     defaultValue={heightBetweenLines}
                      min={1}
                      max={5}
                      onChange={(value) => setHeightBetweenLines(value)}
@@ -153,7 +149,6 @@ function ConfigModal({ isOpen }) {
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Max comment width</FormLabel>
                   <NumberInput
-                     defaultValue={maxCommentWidth}
                      min={10}
                      max={200}
                      onChange={(value) => setMaxCommentWidth(value)}
@@ -168,7 +163,6 @@ function ConfigModal({ isOpen }) {
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Indentation</FormLabel>
                   <NumberInput
-                     defaultValue={indentation}
                      min={0}
                      max={50}
                      onChange={(value) => setIndentation(value)}
@@ -183,7 +177,6 @@ function ConfigModal({ isOpen }) {
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Tabulation per folder</FormLabel>
                   <NumberInput
-                     defaultValue={tabulationPerFolder}
                      min={1}
                      max={7}
                      value={tabulationPerFolder}
@@ -199,7 +192,6 @@ function ConfigModal({ isOpen }) {
                   <FormLabel mb="0">Indicate comment with</FormLabel>
 
                   <Input
-                     defaultValue={indicateCommentWith}
                      value={indicateCommentWith}
                      onChange={(value) => {
                         setIndicateCommentWith(value.target.value);
@@ -208,16 +200,11 @@ function ConfigModal({ isOpen }) {
                </FormControl>
                <FormControl>
                   <FormLabel mb="0">Colors palettes</FormLabel>
-                  <PaletteColors
-                     onChange={changeColorsByPalettes}
-                     defaultValue={paletteChosen}
-                     value={paletteChosen}
-                  />
+                  {/* <PaletteColors onChange={changeColorsByPalettes} value={paletteChosen} /> */}
                </FormControl>
                <FormControl display="flex" alignItems="center" mt={4}>
                   <FormLabel mb="0">Folder color</FormLabel>
                   <ColorPicker
-                     defaultValue={folderColor}
                      onChange={(value) => {
                         setFolderColor(value);
                         setPaletteChosen('');
@@ -229,7 +216,6 @@ function ConfigModal({ isOpen }) {
                   <FormLabel mb="0">Comment color</FormLabel>
 
                   <ColorPicker
-                     defaultValue={commentColor}
                      onChange={(value) => {
                         setCommentColor(value);
                         setPaletteChosen('');
@@ -241,7 +227,6 @@ function ConfigModal({ isOpen }) {
                   <FormLabel mb="0">Background color</FormLabel>
 
                   <ColorPicker
-                     defaultValue={backgroundColor}
                      onChange={(value) => {
                         setBackgroundColor(value);
                         setPaletteChosen('');
@@ -253,7 +238,6 @@ function ConfigModal({ isOpen }) {
                   <FormLabel mb="0">Branch color</FormLabel>
 
                   <ColorPicker
-                     defaultValue={branchColor}
                      onChange={(value) => {
                         setBranchColor(value);
                         setPaletteChosen('');
@@ -265,7 +249,6 @@ function ConfigModal({ isOpen }) {
                   <FormLabel mb="0">Slash color</FormLabel>
 
                   <ColorPicker
-                     defaultValue={slashColor}
                      onChange={(value) => {
                         setSlashColor(value);
                         setPaletteChosen('');

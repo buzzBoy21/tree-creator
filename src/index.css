@@ -24,7 +24,6 @@ body {
    margin: 0px;
    min-width: 200px;
    height: 100svh;
-   touch-action: auto;
 }
 
 h1 {
