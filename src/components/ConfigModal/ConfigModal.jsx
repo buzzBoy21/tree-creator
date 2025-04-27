@@ -28,7 +28,7 @@ function generateSpaces(count) {
 function generateSpacesWithLine(count) {
    return '│' + ' '.repeat(count - 1);
 }
-function ConfigModal({ isOpen }) {
+function ConfigModal({ isOpen, onClose }) {
    const [getConfiguration, setConfiguration] = useContext(ConfigurationContext);
 
    const [showFolderSlash, setShowFolderSlash] = useState(getConfiguration.showFolderSlash === '/');
@@ -52,7 +52,7 @@ function ConfigModal({ isOpen }) {
    const [slashColor, setSlashColor] = useState(getConfiguration.slashColor);
    const [paletteChosen, setPaletteChosen] = useState(getConfiguration.paletteChosen);
 
-   const onClose = () => {
+   const whenIsClosing = () => {
       const tabulationPerFolderToStore = {
          withOutLine: generateSpaces(tabulationPerFolder),
          withLine: generateSpacesWithLine(tabulationPerFolder),
@@ -74,7 +74,7 @@ function ConfigModal({ isOpen }) {
          paletteChosen: paletteChosen,
       });
       console.log('showFolderSlash', tabulationPerFolderToStore);
-      isOpen.setOpenConfigModal(false);
+      // isOpen.setOpenConfigModal(false);
    };
 
    const handleResetConfiguration = () => {
@@ -102,14 +102,19 @@ function ConfigModal({ isOpen }) {
       setSlashColor(colors.slashColor);
    };
    return (
-      <Modal isOpen={isOpen.openConfigModal} scrollBehavior="inside">
+      <Modal
+         isOpen={isOpen}
+         scrollBehavior="inside"
+         onClose={onClose}
+         onCloseComplete={whenIsClosing}
+         blockScrollOnMount={false}>
          <ModalOverlay />
          <ModalContent>
             <ModalHeader>⚙️Config </ModalHeader>
             <ModalCloseButton
-               onClick={() => {
-                  onClose();
-               }}
+            // onClick={() => {
+            //    onClose();
+            // }}
             />
             <ModalBody gap={2} display="flex" flexDirection="column">
                <FormControl display="flex" alignItems="center">
