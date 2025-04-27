@@ -10,23 +10,24 @@ import { useDisclosure } from '@chakra-ui/react';
 
 function MainLayout() {
    const { isOpen, onOpen, onClose } = useDisclosure();
+   const {
+      isOpen: isOpenHelpModal,
+      onOpen: onOpenHelpModal,
+      onClose: onCloseHelpModal,
+   } = useDisclosure();
+
    const [openConfigModal, setOpenConfigModal] = useState(false);
    const [openHelpModal, setOpenHelpModal] = useState(false);
    return (
       <>
-         <Header
-            handleMoreInfoButton={() => {
-               setOpenHelpModal(true);
-            }}
-            handleConfigButton={onOpen}
-         />
+         <Header handleMoreInfoButton={onOpenHelpModal} handleConfigButton={onOpen} />
          <div className={style.containerPage}>
             <EditTree></EditTree>
             <ConfigurationProvider>
                <OutPut></OutPut>
                <ConfigModal isOpen={isOpen} onClose={onClose}></ConfigModal>
             </ConfigurationProvider>
-            <HelpModal isOpen={{ openHelpModal, setOpenHelpModal }}></HelpModal>
+            <HelpModal isOpen={isOpenHelpModal} onClose={onCloseHelpModal}></HelpModal>
          </div>
       </>
    );

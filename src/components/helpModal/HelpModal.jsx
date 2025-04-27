@@ -79,22 +79,14 @@ instead of this we recommend markdown mode -->
    │  └──subforder4/
    └──subfolder1/
 \`\`\``;
-function HelpModal({ isOpen }) {
-   const onClose = () => {
-      isOpen.setOpenHelpModal(false);
-   };
-
+function HelpModal({ isOpen, onClose }) {
    return (
       <>
-         <Modal isOpen={isOpen.openHelpModal} scrollBehavior="inside" size={'4xl'}>
+         <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside" size={'4xl'}>
             <ModalOverlay />
             <ModalContent>
                <ModalHeader>📖Best Practices </ModalHeader>
-               <ModalCloseButton
-                  onClick={() => {
-                     onClose();
-                  }}
-               />
+               <ModalCloseButton />
                <ModalBody gap={2} display="flex" flexDirection="column">
                   <Tabs size="md" variant="enclosed">
                      <TabList>
