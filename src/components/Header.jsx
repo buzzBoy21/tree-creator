@@ -20,6 +20,25 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
    const btnRef = useRef();
    //return true if navigator is edge, chrome or opera
    const canIuseShowDirectoryPicker = useBrowserDetection();
+   function handleButtonBestPractices() {
+      //there is a bug in Chackra -ui which does strange behavior in the drawer's scroll along with  the sidebar -> solution close the sidebar before that client presses the close button of drawer
+      handleMoreInfoButton();
+      onClose();
+   }
+
+   /*************  ✨ Windsurf Command ⭐  *************/
+   /**
+    * Function which closes the sidebar before the drawer is closed, this is a hack because of a bug in Chackra-ui
+    * @function
+    * @param {function} handleConfigButton - function which opens the sidebar
+    * @param {function} onClose - function which closes the drawer
+    */
+   /*******  fa9fe4ad-880a-41a0-b6e2-06638b82878b  *******/
+   function handleButtonConfiguration() {
+      //there is a bug in Chackra -ui which does strange behavior in the drawer's scroll along with  the sidebar -> solution close the sidebar before that client presses the close button of drawer
+      handleConfigButton();
+      onClose();
+   }
    return (
       <header className={style.header}>
          <img src={logo} alt="brand logo" style={{ height: '2em', width: 'auto' }} />
@@ -48,13 +67,13 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
                   <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
                      Import Folders
                   </ImportFolders>
-                  <Button colorScheme="gray" variant="outline" onClick={handleMoreInfoButton}>
+                  <Button colorScheme="gray" variant="outline" onClick={handleButtonBestPractices}>
                      Best Practices
                   </Button>
                   <Button
                      colorScheme="gray"
                      variant="outline"
-                     onClick={handleConfigButton}
+                     onClick={handleButtonConfiguration}
                      ref={btnRef}>
                      Config
                   </Button>
