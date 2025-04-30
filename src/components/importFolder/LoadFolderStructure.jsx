@@ -1,5 +1,5 @@
 let resourceCache = null;
-
+import React from 'react';
 function createResource(promise) {
    let status = 'pending';
    let result;
@@ -26,7 +26,9 @@ function createResource(promise) {
             throw result;
          } else if (status === 'success') {
             console.log('sale');
-            return result;
+            return React.createElement(React.Fragment); //return fragment to avoid react error of not returning a React element
+            //Error->Uncaught Error: Objects are not valid as a React child (found: object with keys {$$typeof, render}).
+            // If you meant to render a collection of children, use an array instead.
          }
       },
    };

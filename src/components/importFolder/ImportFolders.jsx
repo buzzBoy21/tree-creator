@@ -4,26 +4,19 @@ import { parseToArray, eliminateDuplicateURL, buildStructure } from '../../utils
 import { useContext, useState, useTransition } from 'react';
 import { FoldersContext } from '../../context/FolderStructureContext';
 import LoadFolderStructure from './LoadFolderStructure';
-
 export function ImportFolders({ useShowDirectoryPicker, children }) {
    const [context, setContext] = useContext(FoldersContext);
-   const [filesToProcess, setFilesToProcess] = useState(false);
+   const [filesToProcess, setFilesToProcess] = useState(null);
    const [isPending, startTransition] = useTransition(); // [isPending, startTransition]useTransition()
    function handleImportFolder(event) {
       // in the future change for chrome file picker useShowDirectoryPicker=true -> chrome picker
       if (useShowDirectoryPicker || !useShowDirectoryPicker) {
-         //change for chrome file picker
-         //    console.log('chrome');
-         // } else {
-
          const fileList = event.target.files;
-         startTransition(() => {
-            setFilesToProcess(fileList);
-         });
+         setFilesToProcess(fileList);
       }
    }
 
-   return useShowDirectoryPicker ? (
+   return useShowDirectoryPicker || !useShowDirectoryPicker ? (
       <>
          <input
             id="file"
@@ -35,7 +28,7 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
          />
          <label htmlFor="file" className={style.labelSelectLanguage}>
             {children}
-            {isPending && <div style={{ backgroundColor: 'red' }}>aaaaaaaaa</div>}
+            {/* {isPending && <Spinner />} */}
          </label>
          {filesToProcess && (
             <LoadFolderStructure
@@ -48,7 +41,7 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
                         highestId
                      );
                      setContext({ folders: structure, highestId: id });
-                     setFilesToProcess(false); // reset files to not execute again. We can use also memorization
+                     setFilesToProcess(null); // reset files to not execute again. We can use also memorization
                   } else {
                      alert(
                         'No files found in the selected folder. Please select and upload  folder with files.'
@@ -73,28 +66,28 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
             {children}
             {isPending && Spinner}
          </label>
-         {filesToProcess && (
+         {/* {filesToProcess && (
             <LoadFolderStructure
                files={filesToProcess}
                doThis={(filesToProcess, highestId = context.highestId) => {
                   console.log('hola que tal estas', filesToProcess, highestId);
-                  const arrayFiles = parseToArray(filesToProcess);
-                  if (arrayFiles.length > 0) {
-                     const [structure, id] = buildStructure(
-                        eliminateDuplicateURL(arrayFiles),
-                        highestId
-                     );
-                     setContext({ folders: structure, highestId: id });
-                     setFilesToProcess(false); // reset files to not execute again. We can use also memorization
-                  } else {
-                     alert(
-                        'No files found in the selected folder. Please select and upload  folder with files.'
-                     );
-                     setFilesToProcess(null);
-                  }
+                  // const arrayFiles = parseToArray(filesToProcess);
+                  // if (arrayFiles.length > 0) {
+                  //    const [structure, id] = buildStructure(
+                  //       eliminateDuplicateURL(arrayFiles),
+                  //       highestId
+                  //    );
+                  //    setContext({ folders: structure, highestId: id });
+                  //    setFilesToProcess(false); // reset files to not execute again. We can use also memorization
+                  // } else {
+                  //    alert(
+                  //       'No files found in the selected folder. Please select and upload  folder with files.'
+                  //    );
+                  //    setFilesToProcess(null);
+                  // }
                }}
             />
-         )}
+         )} */}
       </>
    );
 }
