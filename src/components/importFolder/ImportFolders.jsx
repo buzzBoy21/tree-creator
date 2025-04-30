@@ -1,9 +1,10 @@
-import { Button, Spinner } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import style from './style.module.css';
 import { parseToArray, eliminateDuplicateURL, buildStructure } from '../../utils/parseFolders';
 import { useContext, useState, useTransition } from 'react';
 import { FoldersContext } from '../../context/FolderStructureContext';
 import LoadFolderStructure from './LoadFolderStructure';
+import Spinner from '../spinner/Spinner';
 export function ImportFolders({ useShowDirectoryPicker, children }) {
    const [context, setContext] = useContext(FoldersContext);
    const [filesToProcess, setFilesToProcess] = useState(null);
@@ -30,7 +31,7 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
             />
             <label htmlFor="file" className={style.labelSelectLanguage}>
                {children}
-               {/* {isPending && <Spinner />} */}
+               {isPending && <Spinner />}
             </label>
             {filesToProcess && (
                <LoadFolderStructure
