@@ -16,78 +16,44 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
       }
    }
 
-   return useShowDirectoryPicker || !useShowDirectoryPicker ? (
-      <>
-         <input
-            id="file"
-            className={style.inputSelectLanguage}
-            type="file"
-            webkitdirectory="true"
-            multiple
-            onChange={handleImportFolder}
-         />
-         <label htmlFor="file" className={style.labelSelectLanguage}>
-            {children}
-            {/* {isPending && <Spinner />} */}
-         </label>
-         {filesToProcess && (
-            <LoadFolderStructure
-               files={filesToProcess}
-               doThis={(filesToProcess, highestId = context.highestId) => {
-                  const arrayFiles = parseToArray(filesToProcess);
-                  if (arrayFiles.length > 0) {
-                     const [structure, id] = buildStructure(
-                        eliminateDuplicateURL(arrayFiles),
-                        highestId
-                     );
-                     setContext({ folders: structure, highestId: id });
-                     setFilesToProcess(null); // reset files to not execute again. We can use also memorization
-                  } else {
-                     alert(
-                        'No files found in the selected folder. Please select and upload  folder with files.'
-                     );
-                     setFilesToProcess(null);
-                  }
-               }}
+   return (
+      useShowDirectoryPicker ||
+      (!useShowDirectoryPicker && (
+         <>
+            <input
+               id="file"
+               className={style.inputSelectLanguage}
+               type="file"
+               webkitdirectory="true"
+               multiple
+               onChange={handleImportFolder}
             />
-         )}
-      </>
-   ) : (
-      <>
-         <input
-            id="file"
-            className={style.inputSelectLanguage}
-            type="file"
-            webkitdirectory="true"
-            multiple
-            onChange={handleImportFolder}
-         />
-         <label htmlFor="file" className={style.labelSelectLanguage}>
-            {children}
-            {isPending && Spinner}
-         </label>
-         {/* {filesToProcess && (
-            <LoadFolderStructure
-               files={filesToProcess}
-               doThis={(filesToProcess, highestId = context.highestId) => {
-                  console.log('hola que tal estas', filesToProcess, highestId);
-                  // const arrayFiles = parseToArray(filesToProcess);
-                  // if (arrayFiles.length > 0) {
-                  //    const [structure, id] = buildStructure(
-                  //       eliminateDuplicateURL(arrayFiles),
-                  //       highestId
-                  //    );
-                  //    setContext({ folders: structure, highestId: id });
-                  //    setFilesToProcess(false); // reset files to not execute again. We can use also memorization
-                  // } else {
-                  //    alert(
-                  //       'No files found in the selected folder. Please select and upload  folder with files.'
-                  //    );
-                  //    setFilesToProcess(null);
-                  // }
-               }}
-            />
-         )} */}
-      </>
+            <label htmlFor="file" className={style.labelSelectLanguage}>
+               {children}
+               {/* {isPending && <Spinner />} */}
+            </label>
+            {filesToProcess && (
+               <LoadFolderStructure
+                  files={filesToProcess}
+                  doThis={(filesToProcess, highestId = context.highestId) => {
+                     const arrayFiles = parseToArray(filesToProcess);
+                     if (arrayFiles.length > 0) {
+                        const [structure, id] = buildStructure(
+                           eliminateDuplicateURL(arrayFiles),
+                           highestId
+                        );
+                        setContext({ folders: structure, highestId: id });
+                        setFilesToProcess(null); // reset files to not execute again. We can use also memorization
+                     } else {
+                        alert(
+                           'No files found in the selected folder. Please select and upload  folder with files.'
+                        );
+                        setFilesToProcess(null);
+                     }
+                  }}
+               />
+            )}
+         </>
+      ))
    );
 }
