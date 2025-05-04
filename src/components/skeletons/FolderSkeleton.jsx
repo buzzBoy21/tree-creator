@@ -3,7 +3,7 @@ import style from './../folder/folder.module.css';
 import { Button } from '@chakra-ui/react';
 import folderSVG from '../../assets/folder.svg';
 import binSvg from '../../assets/bin.svg';
-import loadingStyle from './folderSkeleton.module.css';
+import loadingStyle from './FolderSkeleton.module.css';
 import PhraseWithDots from './PhraseWithDots';
 function FolderSkeleton() {
    return (
