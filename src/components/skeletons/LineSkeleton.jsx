@@ -14,7 +14,7 @@ function LineSkeleton({ backgroundIsDark, align = 'left', startAt, endAt }) {
       divStyle = { marginRight: startAt ?? 'auto' };
    }
    return (
-      <div className={style.container + ' ' + style.shimmer} style={{ height: '1em', ...divStyle }}>
+      <div className={style.container + ' ' + 'shimmer'} style={{ height: '1em', ...divStyle }}>
          <span style={{ height: '100%', ...spanStyle }}></span>
       </div>
    );

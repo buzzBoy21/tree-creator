@@ -15,7 +15,11 @@ import {
 import { useState, useRef } from 'react';
 import hamburger from './../assets/hamburger.svg';
 
-export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = () => {} }) {
+export function Header({
+   startTransition,
+   handleMoreInfoButton = () => {},
+   handleConfigButton = () => {},
+}) {
    const { isOpen, onOpen, onClose } = useDisclosure();
    const btnRef = useRef();
    //return true if navigator is edge, chrome or opera
@@ -25,7 +29,7 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
       handleMoreInfoButton();
       onClose();
    }
-
+   console.log(startTransition, 'aaaaaaaaaaaaaaaaaaaaaaa', typeof startTransition);
    /*************  ✨ Windsurf Command ⭐  *************/
    /**
     * Function which closes the sidebar before the drawer is closed, this is a hack because of a bug in Chackra-ui
@@ -43,7 +47,9 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
       <header className={style.header}>
          <img src={logo} alt="brand logo" style={{ height: '2em', width: 'auto' }} />
          <div className={style.mainPart}>
-            <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
+            <ImportFolders
+               startTransition={startTransition}
+               useShowDirectoryPicker={canIuseShowDirectoryPicker}>
                Import Folders
             </ImportFolders>
             <Button colorScheme="gray" variant="outline" onClick={handleMoreInfoButton}>
@@ -64,7 +70,9 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
                <DrawerHeader>Menu</DrawerHeader>
 
                <DrawerBody display={'flex'} flexDirection={'column'} gap={'2em'}>
-                  <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
+                  <ImportFolders
+                     startTransition={startTransition}
+                     useShowDirectoryPicker={canIuseShowDirectoryPicker}>
                      Import Folders
                   </ImportFolders>
                   <Button colorScheme="gray" variant="outline" onClick={handleButtonBestPractices}>

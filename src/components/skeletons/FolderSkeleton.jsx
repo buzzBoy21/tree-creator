@@ -1,4 +1,3 @@
-import AddFolder from '../addFolder/AddFolder';
 import ArrowButton from '../buttons/ArrowButton';
 import style from './../folder/folder.module.css';
 import { Button } from '@chakra-ui/react';
@@ -9,7 +8,7 @@ import PhraseWithDots from './PhraseWithDots';
 function FolderSkeleton() {
    return (
       <div
-         className={style.containerFolder + ' ' + loadingStyle.containerFolder}
+         className={[style.containerFolder, loadingStyle.containerFolder, style.shimmer].join(' ')}
          style={{ showMore: false, cssContainer: 'center', right: true, down: false }}>
          <div className={style.principalSection}>
             <ArrowButton right borderRadius="0%"></ArrowButton>

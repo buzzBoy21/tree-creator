@@ -1,4 +1,4 @@
-.container {
+.shimmer {
    animation: shinePulse 2.5s infinite ease-in-out;
    & > span {
       overflow: hidden;

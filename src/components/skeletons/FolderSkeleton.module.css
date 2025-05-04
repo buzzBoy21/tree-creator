@@ -25,6 +25,11 @@
    mix-blend-mode: overlay;
 }
 
+/* EFECTO DE BRILLO SUTIL PARA MEJORAR LA APARIENCIA */
+.shimmer {
+   animation: shinePulse 2.5s infinite ease-in-out;
+}
+
 @keyframes shimmer {
    0% {
       left: -50%;
@@ -35,12 +40,6 @@
       background-position: -200% 0;
    }
 }
-
-/* EFECTO DE BRILLO SUTIL PARA MEJORAR LA APARIENCIA */
-.shimmer {
-   animation: shinePulse 2.5s infinite ease-in-out;
-}
-
 @keyframes shinePulse {
    0%,
    100% {
