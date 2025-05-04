@@ -1,0 +1,14 @@
+@media screen and (width<500px) {
+   .repositoriesTab {
+      & > img:not(:first-child) {
+         display: none;
+      }
+   }
+}
+@media screen and (width<370px) {
+   .repositoriesTab {
+      & > img:not(:first-child) {
+         display: block;
+      }
+   }
+}

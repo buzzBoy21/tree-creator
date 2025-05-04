@@ -23,6 +23,8 @@ import bitBucketIcon from './../../assets/bitbucket.svg';
 import gitHubIcon from './../../assets/github.svg';
 import gitLabIcon from './../../assets/gitlab.svg';
 import CodeExample from '../CodeExample/CodeExample';
+import styles from './HelpModal.module.css';
+import useWindowSize from '../../hook/useWindowSize';
 const pictureHTML = `<picture>
    <!-- Image for dark mode -->
    <source srcset="./relativePath.png" media="(prefers-color-scheme: dark)">
@@ -80,6 +82,7 @@ instead of this we recommend markdown mode -->
    └──subfolder1/
 \`\`\``;
 function HelpModal({ isOpen, onClose }) {
+   const [width, height] = useWindowSize();
    return (
       <>
          <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside" size={'4xl'}>
@@ -92,37 +95,42 @@ function HelpModal({ isOpen, onClose }) {
                      <TabList>
                         <Tab>
                            <div
+                              className={styles.repositoriesTab}
                               style={{
                                  display: 'flex',
                                  alignItems: 'center',
+                                 justifyContent: 'center',
                                  flexWrap: 'wrap',
                                  gap: '0.2em',
-                                 marginRight: '1em',
                                  minWidth: '1em',
                               }}>
                               <img src={gitHubIcon} style={{ height: '1.2em' }} />
                               <img src={gitLabIcon} style={{ height: '1.2em' }} />
                               <img src={bitBucketIcon} style={{ height: '1.2em' }} />
                            </div>
-                           <span>Repositories of Git</span>{' '}
+                           {width > 370 && (
+                              <span style={{ marginLeft: '1em' }}>
+                                 Repositories {width > 500 && 'of Git'}{' '}
+                              </span>
+                           )}
                         </Tab>
                         <Tab>
                            <img src={cameraIcon} style={{ height: '1.2em', marginRight: '1em' }} />
-                           <span>Photo mode</span>{' '}
+                           <span>Photo mode</span>
                         </Tab>
                         <Tab>
                            <img
                               src={markDownIcon}
                               style={{ height: '1.2em', marginRight: '1em' }}
                            />
-                           <span>Markdown mode</span>{' '}
+                           <span> {width < 500 ? '.md' : 'Markdown mode'}</span>
                         </Tab>
                         <Tab>
                            <img
                               src={copyPlainTextIcon}
                               style={{ height: '1.2em', marginRight: '1em' }}
                            />
-                           <span>Plain Text mode</span>{' '}
+                           <span>Plain Text mode</span>
                         </Tab>
                      </TabList>
                      <TabPanels>
