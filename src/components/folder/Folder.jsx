@@ -11,7 +11,6 @@ import { FoldersContext } from '../../context/FolderStructureContext';
 import { moveFolderDown, moveFolderUp } from '../../utils/moveFolder';
 import CommentInput from '../commentInput/CommentInput';
 import { updateComment } from '../../utils/updateComment';
-import { Spinner } from '@chakra-ui/react';
 
 const Folder = memo(function Folder({
    idFolder,
