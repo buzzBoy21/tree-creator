@@ -17,17 +17,7 @@ export function EditTree() {
             </TabList>
 
             <TabPanels className={style.editFolderContainer}>
-               <TabPanel
-                  style={
-                     context.folders.length
-                        ? {}
-                        : {
-                             display: 'flex',
-                             flexDirection: 'column',
-                             justifyContent: 'center',
-                             alignItems: 'center',
-                          }
-                  }>
+               <TabPanel>
                   {context.folders.length ? (
                      context.folders.map((folder) => (
                         <Folder
@@ -37,10 +27,14 @@ export function EditTree() {
                            nameFolder={folder.name}></Folder>
                      ))
                   ) : (
-                     <div style={{ marginTop: '2em' }}>
+                     <div className={style.listImportContainer}>
                         <ImportFolders useShowDirectoryPicker={canIuseShowDirectoryPicker}>
                            Import Folders
                         </ImportFolders>
+                        <Alert status="warning" width={'fit-content'}>
+                           <AlertIcon />
+                           If you import a huge folder, it may take a while.
+                        </Alert>
                      </div>
                   )}
                </TabPanel>

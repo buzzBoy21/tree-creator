@@ -2,24 +2,24 @@ import { buildStructure, eliminateDuplicateURL, parseToArray } from './parseFold
 
 self.onmessage = (event) => {
    try {
-      const arrayFiles = parseToArray(event.data.filesToProcess);
       const highestId = event.data.highestId;
-      //   console.log(arrayFiles, highestId);
-      console.log('ejecuto');
-      console.log(event.data);
+      const arrayFiles = parseToArray(event.data.filesToProcess);
+      const filesWithoutDuplicatedURL = eliminateDuplicateURL(arrayFiles);
+      const fileCount = filesWithoutDuplicatedURL.length;
 
       let completed = false;
 
       let [structure, id] = [[], 0];
 
       if (arrayFiles.length > 0) {
-         [structure, id] = buildStructure(eliminateDuplicateURL(arrayFiles), highestId);
+         [structure, id] = buildStructure(filesWithoutDuplicatedURL, highestId);
          completed = true;
       }
       postMessage({
          result: {
             structure: structure,
             highestId: id,
+            fileCount: fileCount,
             completed: completed,
             criticError: false,
          },

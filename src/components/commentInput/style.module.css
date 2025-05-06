@@ -2,3 +2,16 @@
    field-sizing: content;
    height: 100px;
 }
+.container {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 0.5em;
+   & > button {
+      & > img {
+         width: 1em;
+         height: 1em;
+         margin-left: 0.5em;
+      }
+   }
+}

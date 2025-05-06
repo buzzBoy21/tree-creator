@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState, useTransition, useRef } from 'react';
+import { useContext, useRef, Suspense } from 'react';
 import style from './outPut.module.css';
 import { FoldersContext } from '../../context/FolderStructureContext';
-import { makeOutPut } from '../../utils/makeOutPut.jsx';
 import { Button } from '@chakra-ui/react';
 import copyTextIcon from '../../assets/copy-text.svg';
 import { ConfigurationContext } from '../../context/ConfigurationContext';
@@ -10,54 +9,12 @@ import markDownIcon from './../../assets/markdown.svg';
 import html2canvas from 'html2canvas';
 import { makeOutPut0_5 } from '../../utils/makeOutPut0.5.js';
 import { makeOutPut0_5markDown } from '../../utils/makeOutPut0.5MarkDown.js';
-
+import OutPutText from './OutPutText.jsx';
+import { OutPutSkeleton } from '../skeletons/OutPutSkeleton.jsx';
 export function OutPut() {
    const [context] = useContext(FoldersContext);
    const [configurationContext] = useContext(ConfigurationContext);
-   const [outPutText, setOutPutText] = useState('');
-   const [, startTransition] = useTransition();
    const onlyOutPutRef = useRef(null);
-
-   useEffect(() => {
-      const commentColor = configurationContext.colorComment.color.concat(
-         configurationContext.colorComment.alpha.length < 2
-            ? '0' + configurationContext.colorComment.alpha
-            : configurationContext.colorComment.alpha
-      );
-      const branchColor = configurationContext.colorBranch.color.concat(
-         configurationContext.colorBranch.alpha.length < 2
-            ? '0' + configurationContext.colorBranch.alpha
-            : configurationContext.colorBranch.alpha
-      );
-      const folderColor = configurationContext.folderColor.color.concat(
-         configurationContext.folderColor.alpha.length < 2
-            ? '0' + configurationContext.folderColor.alpha
-            : configurationContext.folderColor.alpha
-      );
-      const slashColor = configurationContext.slashColor.color.concat(
-         configurationContext.slashColor.alpha.length < 2
-            ? '0' + configurationContext.slashColor.alpha
-            : configurationContext.slashColor.alpha
-      );
-      startTransition(() => {
-         //If i want to implement same isPending
-         const outPut = makeOutPut(
-            context.folders,
-            configurationContext.indentation,
-            configurationContext.tabulationPerFolder,
-            configurationContext.showFolderSlash,
-            configurationContext.showComment,
-            configurationContext.indicateCommentWith,
-            configurationContext.maxCommentWidth,
-            commentColor,
-            branchColor,
-            folderColor,
-            slashColor
-         );
-         setOutPutText(outPut);
-      });
-   }, [context, configurationContext]);
-
    const copyToClipboard = () => {
       const outPutWithOutColor = makeOutPut0_5(
          context.folders,
@@ -148,65 +105,70 @@ export function OutPut() {
          });
    };
    return (
-      <div
-         className={style.container}
-         style={{
-            backgroundColor:
-               configurationContext.colorBackground.color +
-               (configurationContext.colorBackground.alpha.length < 2
-                  ? '0' + configurationContext.colorBackground.alpha
-                  : configurationContext.colorBackground.alpha),
-         }}>
-         {outPutText !== '' && (
-            <>
-               <div className={style.copyContainer}>
-                  <Button
-                     display={'block'}
-                     padding={'0.5em'}
-                     aspectRatio={'1/1'}
-                     height={'3em'}
-                     onClick={createCanvasAndPrint}
-                     marginBottom={'1em'}>
-                     <img
-                        src={cameraIcon}
-                        alt="copy text"
-                        title="download output image"
-                        style={{ height: '2em' }}
-                     />
-                  </Button>
-                  <Button
-                     display={'block'}
-                     padding={'0.5em'}
-                     aspectRatio={'1/1'}
-                     height={'3em'}
-                     onClick={copyToClipBoardToMarkdown}
-                     marginBottom={'1em'}>
-                     <img
-                        src={markDownIcon}
-                        alt="copy text"
-                        title="download output image"
-                        style={{ height: '2em' }}
-                     />
-                  </Button>
-                  <Button
-                     display={'block'}
-                     padding={'0.5em'}
-                     aspectRatio={'1/1'}
-                     height={'3em'}
-                     onClick={copyToClipboard}>
-                     <img
-                        src={copyTextIcon}
-                        alt="copy text"
-                        title="copy plain text"
-                        style={{ height: '2em' }}
-                     />
-                  </Button>
-               </div>
-               <div className={style.onlyText} ref={onlyOutPutRef}>
-                  {outPutText}
-               </div>
-            </>
-         )}
-      </div>
+      <Suspense fallback={<OutPutSkeleton />}>
+         <div
+            className={style.container}
+            style={{
+               backgroundColor:
+                  configurationContext.colorBackground.color +
+                  (configurationContext.colorBackground.alpha.length < 2
+                     ? '0' + configurationContext.colorBackground.alpha
+                     : configurationContext.colorBackground.alpha),
+            }}>
+            {context.folders.length > 0 && (
+               <>
+                  <div className={style.copyContainer}>
+                     <Button
+                        display={'block'}
+                        padding={'0.5em'}
+                        aspectRatio={'1/1'}
+                        height={'3em'}
+                        onClick={createCanvasAndPrint}
+                        marginBottom={'1em'}>
+                        <img
+                           src={cameraIcon}
+                           alt="copy text"
+                           title="download output image"
+                           style={{ height: '2em' }}
+                        />
+                     </Button>
+                     <Button
+                        display={'block'}
+                        padding={'0.5em'}
+                        aspectRatio={'1/1'}
+                        height={'3em'}
+                        onClick={copyToClipBoardToMarkdown}
+                        marginBottom={'1em'}>
+                        <img
+                           src={markDownIcon}
+                           alt="copy text"
+                           title="download output image"
+                           style={{ height: '2em' }}
+                        />
+                     </Button>
+                     <Button
+                        display={'block'}
+                        padding={'0.5em'}
+                        aspectRatio={'1/1'}
+                        height={'3em'}
+                        onClick={copyToClipboard}>
+                        <img
+                           src={copyTextIcon}
+                           alt="copy text"
+                           title="copy plain text"
+                           style={{ height: '2em' }}
+                        />
+                     </Button>
+                  </div>
+
+                  <OutPutText
+                     context={context}
+                     configurationContext={configurationContext}
+                     ref={onlyOutPutRef}
+                  />
+               </>
+            )}
+         </div>
+      </Suspense>
    );
 }

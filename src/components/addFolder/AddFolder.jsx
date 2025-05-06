@@ -19,9 +19,8 @@ export default function AddFolder({ folderId }) {
          children: [],
       });
       if (wasGood) {
-         console.log('hola');
-         console.log(JSON.stringify(folderList, null, '\t'));
          setContext({ folders: folderList, highestId: newId });
+         setNewFolderName('');
       }
    }
    function handleInput(e) {

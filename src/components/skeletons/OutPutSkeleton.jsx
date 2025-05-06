@@ -61,6 +61,7 @@ export function OutPutSkeleton() {
                (configurationContext.colorBackground.alpha.length < 2
                   ? '0' + configurationContext.colorBackground.alpha
                   : configurationContext.colorBackground.alpha),
+            overflowY: 'scroll',
          }}>
          <>
             <div className={style.copyContainer}>

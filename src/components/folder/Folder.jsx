@@ -27,7 +27,6 @@ const Folder = memo(function Folder({
       right: true,
       down: false,
    });
-
    const [context, setContext] = useContext(FoldersContext);
 
    function handleArrowButton() {

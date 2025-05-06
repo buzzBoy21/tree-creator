@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import CustomWorker from '../utils/task.js?worker';
+import CustomWorker from '../utils/importFolderTask.js?worker';
 export function useWorker() {
    const workerRef = useRef(null);
 

@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { useCallback, useContext, useState, useTransition } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState, useTransition } from 'react';
 import { FoldersContext } from '../../context/FolderStructureContext';
 import Spinner from '../spinner/Spinner';
 import { useWorker } from '../../hook/useWorker';
@@ -10,6 +10,7 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
    const [loadingFiles, setLoadingFiles] = useState(false);
    const [resource, setResource] = useState(null);
    const [runWorker] = useWorker();
+   const resultRef = useRef(null);
 
    const handleImportFolder = (event) => {
       setLoadingFiles(true);
@@ -32,10 +33,10 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
    if (resource) {
       const result = resource.read();
       if (result.completed) {
-         setContext({
+         resultRef.current = {
             folders: result.structure,
             highestId: result.highestId,
-         });
+         };
          setResource(null);
       } else {
          alert(
@@ -45,9 +46,13 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
       }
       setLoadingFiles(false);
    }
-   if (!useShowDirectoryPicker && useShowDirectoryPicker !== false) {
-      return null;
-   }
+   useEffect(() => {
+      //to fix  Cannot update a component (FolderStructureContext) while rendering a different component
+      if (resultRef.current !== null) {
+         setContext(resultRef.current);
+         resultRef.current = null;
+      }
+   }, [resultRef, resultRef.current]);
 
    return (
       <>
@@ -63,9 +68,6 @@ export function ImportFolders({ useShowDirectoryPicker, children }) {
             {children}
             {loadingFiles && <Spinner />}
          </label>
-
-         {/* {filesToProcess && <LoadFolderStructure files={filesToProcess} doThis={processFiles} />} */}
-         {/* {filesToProcess && <LoadFolderStructure resource={runWorker} />} */}
       </>
    );
 }
