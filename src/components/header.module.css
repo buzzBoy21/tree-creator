@@ -20,6 +20,10 @@
    & > .mainPart > .hamburger {
       display: none;
    }
+   & > .mainPart > a {
+      width: 1.35em;
+      align-self: center;
+   }
 }
 
 @media screen and (width<500px) {

@@ -2,6 +2,7 @@ import { useBrowserDetection } from '../hook/useBrowserDetection';
 import style from './header.module.css';
 import { ImportFolders } from './importFolder/ImportFolders';
 import logo from './../assets/logo.svg';
+import githubSvg from './../assets/github.svg';
 import {
    Button,
    Drawer,
@@ -44,7 +45,9 @@ export function Header({ handleMoreInfoButton = () => {}, handleConfigButton = (
             <Button colorScheme="gray" variant="outline" onClick={handleConfigButton} ref={btnRef}>
                Config
             </Button>
-
+            <a href="https://github.com/buzzBoy21/tree-creator">
+               <img src={githubSvg} alt="github svg" />
+            </a>
             <button onClick={onOpen} className={style.hamburger}>
                <img src={hamburger} alt="menu icon" style={{ height: '2em', width: 'auto' }} />
             </button>
